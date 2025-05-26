@@ -1,0 +1,17 @@
+@keyframes close {
+    from {
+        width: 208px;
+    }
+    to {
+        width: 56px;
+    }
+}
+
+@keyframes open {
+    from {
+        width: 56px;
+    }
+    to {
+        width: 208px;
+    }
+}
