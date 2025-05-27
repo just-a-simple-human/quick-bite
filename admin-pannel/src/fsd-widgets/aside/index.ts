@@ -1,3 +1,1 @@
-import Aside from "./ui/aside";
-
-export { Aside };
+export { Aside } from "./ui/aside";

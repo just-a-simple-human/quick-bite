@@ -2,7 +2,7 @@
 
 import { SVGAttributes } from "react";
 
-function DashboardSvg(props: SVGAttributes<unknown>) {
+export function DashboardSvg(props: SVGAttributes<unknown>) {
   return (
     <svg
       width="24"
@@ -20,7 +20,7 @@ function DashboardSvg(props: SVGAttributes<unknown>) {
   );
 }
 
-function MenuSvg(props: SVGAttributes<unknown>) {
+export function MenuSvg(props: SVGAttributes<unknown>) {
   return (
     <svg
       width="24"
@@ -38,7 +38,7 @@ function MenuSvg(props: SVGAttributes<unknown>) {
   );
 }
 
-function MenuBurgerSvg() {
+export function MenuBurgerSvg() {
   return (
     <svg
       width="32"
@@ -55,7 +55,7 @@ function MenuBurgerSvg() {
   );
 }
 
-function SearchSvg() {
+export function SearchSvg() {
   return (
     <svg
       width="24"
@@ -72,4 +72,36 @@ function SearchSvg() {
   );
 }
 
-export { DashboardSvg, MenuSvg, MenuBurgerSvg, SearchSvg };
+export function MoreVertSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M24 16C26.2 16 28 14.2 28 12C28 9.8 26.2 8 24 8C21.8 8 20 9.8 20 12C20 14.2 21.8 16 24 16ZM24 20C21.8 20 20 21.8 20 24C20 26.2 21.8 28 24 28C26.2 28 28 26.2 28 24C28 21.8 26.2 20 24 20ZM24 32C21.8 32 20 33.8 20 36C20 38.2 21.8 40 24 40C26.2 40 28 38.2 28 36C28 33.8 26.2 32 24 32Z"
+        fill="#292524"
+      />
+    </svg>
+  );
+}
+
+export function RefreshSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M35.3 12.7C32.04 9.44 27.42 7.56 22.34 8.08C15 8.82 8.96004 14.78 8.14004 22.12C7.04004 31.82 14.54 40 24 40C30.38 40 35.86 36.26 38.42 30.88C39.06 29.54 38.1 28 36.62 28C35.88 28 35.18 28.4 34.86 29.06C32.6 33.92 27.18 37 21.26 35.68C16.82 34.7 13.24 31.08 12.3 26.64C10.62 18.88 16.52 12 24 12C27.32 12 30.28 13.38 32.44 15.56L29.42 18.58C28.16 19.84 29.04 22 30.82 22H38C39.1 22 40 21.1 40 20V12.82C40 11.04 37.84 10.14 36.58 11.4L35.3 12.7Z"
+        fill="#292524"
+      />
+    </svg>
+  );
+}

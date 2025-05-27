@@ -1,5 +1,5 @@
 import React from "react";
-import ToggleAsideButton from "./toggle-aside-button";
+import { ToggleAsideButton } from "./toggle-aside-button";
 import { SearchBar } from "@/fsd-features/search";
 
 function Header() {
@@ -14,4 +14,4 @@ function Header() {
   );
 }
 
-export default Header;
+export { Header };

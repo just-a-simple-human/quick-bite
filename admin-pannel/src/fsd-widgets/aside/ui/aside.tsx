@@ -1,7 +1,7 @@
 import React from "react";
 import { AsideTabBar } from "@/fsd-features/navigate";
 import { asideRoutes } from "../model/routes";
-import Logo from "../assets/logo";
+import { Logo } from "../assets/logo";
 
 function Aside() {
   return (
@@ -16,4 +16,4 @@ function Aside() {
   );
 }
 
-export default Aside;
+export { Aside };

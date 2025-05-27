@@ -1,6 +1,6 @@
 import { IRoute } from "@/fsd-shared";
 import React from "react";
-import AsideTab from "./aside-tab";
+import { AsideTab } from "./aside-tab";
 
 interface IProps {
   routes: IRoute[];
@@ -18,4 +18,4 @@ function AsideTabBar({ routes }: IProps) {
   );
 }
 
-export default AsideTabBar;
+export { AsideTabBar };

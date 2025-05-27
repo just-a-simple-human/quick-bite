@@ -1,3 +1,1 @@
-import SearchBar from "./ui/search-bar";
-
-export { SearchBar };
+export { SearchBar } from "./ui/search-bar";

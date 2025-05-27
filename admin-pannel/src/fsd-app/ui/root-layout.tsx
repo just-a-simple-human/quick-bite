@@ -13,9 +13,11 @@ const poppins = Poppins({
 
 function Layout({ children }: IProps) {
   return (
-    <body className={`${poppins.variable} w-dvw h-dvh antialiased flex`}>
+    <body
+      className={`${poppins.variable} max-w-dvw h-dvh antialiased flex overflow-hidden`}
+    >
       <Aside />
-      <div className="flex-1">
+      <div className="box-border w-full max-h-full">
         <Header />
         {children}
       </div>
@@ -23,4 +25,4 @@ function Layout({ children }: IProps) {
   );
 }
 
-export default Layout;
+export { Layout };

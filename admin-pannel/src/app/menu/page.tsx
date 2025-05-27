@@ -1,7 +1,3 @@
-import React from "react";
-
-function MenuPage() {
-  return <div></div>;
-}
+import { MenuPage } from "@/fsd-pages/menu";
 
 export default MenuPage;

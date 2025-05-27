@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Layout from "@/fsd-app/ui/root-layout";
+import { Layout } from "@/fsd-app/ui/root-layout";
 
 export const metadata: Metadata = {
   title: "Create Next App",

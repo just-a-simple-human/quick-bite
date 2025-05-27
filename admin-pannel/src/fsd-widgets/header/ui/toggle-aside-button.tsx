@@ -7,10 +7,10 @@ import React from "react";
 function ToggleAsideButton() {
   const { toggle } = useAsideStore();
   return (
-    <button className="cursor-pointer" onClick={toggle}>
+    <button onClick={toggle}>
       <MenuBurgerSvg />
     </button>
   );
 }
 
-export default ToggleAsideButton;
+export { ToggleAsideButton };
