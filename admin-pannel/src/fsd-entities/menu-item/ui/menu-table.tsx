@@ -44,7 +44,7 @@ function MenuTableRow({ menuItem }: { menuItem: IMenuItem }) {
   return (
     <tr
       className="
-        w-full px-6 py-4 flex items-center gap-16 not-[:last-child]:border-b not-[:last-child]:border-b-stone-400
+        w-full px-6 py-3 flex items-center gap-16 not-[:last-child]:border-b not-[:last-child]:border-b-stone-400
       "
     >
       {/* <td className="w-16 h-16 rounded-2xl shrink-0 bg-stone-400">
@@ -85,73 +85,4 @@ function MenuTableRow({ menuItem }: { menuItem: IMenuItem }) {
   );
 }
 
-function MenuTable() {
-  const data: IMenuItem[] = [
-    {
-      id: 1,
-      name: "Name",
-      category: {
-        id: 1,
-        name: "category",
-      },
-      price: 100,
-      thumbnail: "Some thumbnail",
-      image: "",
-    },
-    {
-      id: 2,
-      name: "Name2",
-      category: {
-        id: 1,
-        name: "category",
-      },
-      price: 200,
-      thumbnail: "Some thumbnail2",
-      image: "",
-    },
-    {
-      id: 3,
-      name: "Name3",
-      category: {
-        id: 1,
-        name: "category",
-      },
-      price: 300,
-      thumbnail: "Some thumbnail3",
-      image: "",
-    },
-    {
-      id: 4,
-      name: "Name4",
-      category: {
-        id: 1,
-        name: "category",
-      },
-      price: 400,
-      thumbnail: "Some thumbnail4",
-      image: "",
-    },
-    {
-      id: 5,
-      name: "Name5",
-      category: {
-        id: 1,
-        name: "category",
-      },
-      price: 500,
-      thumbnail: "Some thumbnail5",
-      image: "",
-    },
-  ];
-  return (
-    <Table
-      Header={MenuTableHeader}
-      data={data}
-      renderRow={(menuItem: IMenuItem) => (
-        <MenuTableRow key={menuItem.id} menuItem={menuItem} />
-      )}
-    />
-  );
-}
-
-export { MenuTable };
+export { MenuTableHeader, MenuTableRow };

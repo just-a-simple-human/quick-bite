@@ -1,1 +1,1 @@
-export { MenuTable } from "./ui/menu-table";
+export { MenuTableHeader, MenuTableRow } from "./ui/menu-table";
