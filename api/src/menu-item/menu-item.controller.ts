@@ -34,8 +34,11 @@ export class MenuItemController {
     resource: Resource.MenuItem,
     possession: 'any',
   })
-  findAll(@Query('limit') limit: number) {
-    return this.menuItemService.findAll(limit);
+  findAll(
+    @Query('page') page?: number,
+    @Query('itemsPerPage') itemsPerPage?: number,
+  ) {
+    return this.menuItemService.findAll(page, itemsPerPage);
   }
 
   @Get(':id')

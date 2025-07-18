@@ -16,8 +16,11 @@ export class MenuItemService {
     return response;
   }
 
-  async findAll(limit?: number) {
-    const response = await this.menuItemRepository.find({ take: limit });
+  async findAll(page: number = 1, itemsPerPage: number = 5) {
+    const response = await this.menuItemRepository.find({
+      take: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+    });
     return response;
   }
 
