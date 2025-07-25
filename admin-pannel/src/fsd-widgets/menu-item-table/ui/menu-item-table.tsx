@@ -3,7 +3,7 @@ import { MenuTableHeader, MenuTableRow } from "@/fsd-entities/menu-item";
 import { getMenuItemAll } from "@/fsd-entities/menu-item/api/menu-item";
 import { useMenuTableStore } from "@/fsd-entities/menu-item/lib/menu-table-store";
 import { IMenuItem } from "@/fsd-shared";
-import { Table } from "@/fsd-shared/ui/table";
+import { Table } from "@/fsd-shared";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 function MenuTable() {

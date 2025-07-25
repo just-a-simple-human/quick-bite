@@ -2,7 +2,7 @@ import { DashboardSvg, MenuSvg, IRoute } from "@/fsd-shared";
 
 export const asideRoutes: IRoute[] = [
   {
-    href: "/dashboard",
+    href: "/",
     title: "Dashboard",
     Icon: DashboardSvg,
   },

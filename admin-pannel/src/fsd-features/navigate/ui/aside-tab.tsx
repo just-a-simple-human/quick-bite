@@ -22,7 +22,9 @@ function AsideTab({ route }: IProps) {
         className={classNames(
           "p-4 w-52 rounded-lg relative flex items-center gap-4",
           {
-            "bg-orange-400 **:fill-white": pathname.startsWith(href),
+            "bg-orange-400 **:fill-white":
+              (pathname.startsWith(href) && href.length > "/".length) ||
+              (href === pathname && href === "/"),
             "bg-white **:fill-stone-800": !pathname.startsWith(href),
             opened: isOpened,
             closed: !isOpened,
@@ -33,7 +35,9 @@ function AsideTab({ route }: IProps) {
         <Icon className="shrink-0" />
         <span
           className={classNames("text-base font-semibold", {
-            "text-white": pathname.startsWith(href),
+            "text-white":
+              (pathname.startsWith(href) && href.length > "/".length) ||
+              (href === pathname && href === "/"),
             "text-stone-800": !pathname.startsWith(href),
           })}
           hidden={!isOpened}
