@@ -4,22 +4,43 @@ import { HTMLProps } from "react";
 
 interface InputProps extends HTMLProps<HTMLInputElement> {
   label?: string;
+  isPassword?: boolean;
 }
 
-function Input({ value, onChange, placeholder, label, children }: InputProps) {
+function Input({
+  value,
+  onChange,
+  name,
+  placeholder,
+  label,
+  isPassword,
+}: InputProps) {
   return (
     <div className="w-lg relative flex flex-col gap-2">
-      <label className="w-full font-nunito-sans text-lg text-stone-800">
+      <label
+        htmlFor={name}
+        className="w-full font-nunito-sans text-lg text-stone-800"
+      >
         {label}
       </label>
       <input
-        className="w-full px-4 py-2 rounded-lg border border-stone-400 outline-0 font-nunito-sans text-base text-stone-800 placeholder:text-stone-400"
         value={value}
         onChange={onChange}
-        type="password"
+        name={name}
+        id={name}
+        type={isPassword ? "password" : "text"}
         placeholder={placeholder}
+        autoComplete={"on"}
+        className="w-full px-4 py-2 rounded-lg border border-stone-400 outline-0 font-nunito-sans text-base text-stone-800 placeholder:text-stone-400"
       />
-      {children}
+      {isPassword ? (
+        <Link
+          href={"/recover-paswword"}
+          className="absolute right-0 top-0 font-nunito-sans text-lg text-stone-400"
+        >
+          Forget Password?
+        </Link>
+      ) : null}
     </div>
   );
 }
