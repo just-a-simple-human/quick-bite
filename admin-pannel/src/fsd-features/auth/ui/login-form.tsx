@@ -25,7 +25,7 @@ function LoginForm() {
         control={control}
         rules={{
           required: true,
-          pattern: new RegExp(/[a-z]+\@[a-z]+\.[a-z]{1,}/),
+          pattern: new RegExp(/[A-z0-9]+\@[a-z]+\.[a-z]{1,}/),
           min: 1,
         }}
         render={({ field: { value, onChange, name } }) => (
