@@ -26,19 +26,27 @@ function useRegisterForm() {
   });
 }
 
-const loginSubmitHandler: SubmitHandler<ILoginForm> = (data) => {
-  authApi.login({
+const loginSubmitHandler: SubmitHandler<ILoginForm> = async (data) => {
+  const response = await authApi.login({
     email: data.email,
     password: data.password,
   });
+  if (response.status === 200) {
+    window.localStorage.setItem("auth_token", response.data.auth_token);
+    window.history.replaceState(null, "", "/");
+  }
 };
 
-const registerSubmitHandler: SubmitHandler<IRegisterForm> = (data) => {
-  authApi.register({
+const registerSubmitHandler: SubmitHandler<IRegisterForm> = async (data) => {
+  const response = await authApi.register({
     email: data.email,
     username: data.username,
     password: data.password,
   });
+  if (response.status === 200) {
+    window.localStorage.setItem("auth_token", response.data.auth_token);
+    window.history.replaceState(null, "", "/");
+  }
 };
 
 export {
