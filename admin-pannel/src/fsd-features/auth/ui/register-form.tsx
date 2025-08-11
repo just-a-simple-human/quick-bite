@@ -8,7 +8,7 @@ import { Controller } from "react-hook-form";
 function RegisterForm() {
   const {
     control,
-    // formState: { errors },
+    formState: { errors },
     handleSubmit,
   } = useRegisterForm();
 
@@ -30,6 +30,7 @@ function RegisterForm() {
             onChange={onChange}
             label="Email address"
             placeholder="Enter your email..."
+            errors={errors}
           />
         )}
       />
@@ -44,6 +45,7 @@ function RegisterForm() {
             onChange={onChange}
             label="Username"
             placeholder="Enter your username..."
+            errors={errors}
           />
         )}
       />
@@ -59,6 +61,7 @@ function RegisterForm() {
             label="Password"
             placeholder="Enter your password..."
             isPassword
+            errors={errors}
           />
         )}
       />

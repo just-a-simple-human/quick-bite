@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ILoginForm } from "../types/login";
 import { IRegisterForm } from "../types/register";
 import { authApi } from "../api/api";
+import { redirect } from "next/navigation";
 
 function useLoginForm() {
   return useForm<ILoginForm>({
@@ -10,7 +11,7 @@ function useLoginForm() {
       password: "",
       rememberPassword: false,
     },
-    mode: "all",
+    mode: "onSubmit",
   });
 }
 
@@ -22,7 +23,7 @@ function useRegisterForm() {
       password: "",
       termsAndConditions: false,
     },
-    mode: "all",
+    mode: "onSubmit",
   });
 }
 
@@ -31,9 +32,9 @@ const loginSubmitHandler: SubmitHandler<ILoginForm> = async (data) => {
     email: data.email,
     password: data.password,
   });
-  if (response.status === 200) {
+  if (response.status === 201) {
     window.localStorage.setItem("auth_token", response.data.auth_token);
-    window.history.replaceState(null, "", "/");
+    redirect("/");
   }
 };
 
@@ -43,9 +44,9 @@ const registerSubmitHandler: SubmitHandler<IRegisterForm> = async (data) => {
     username: data.username,
     password: data.password,
   });
-  if (response.status === 200) {
+  if (response.status === 201) {
     window.localStorage.setItem("auth_token", response.data.auth_token);
-    window.history.replaceState(null, "", "/");
+    redirect("/");
   }
 };
 

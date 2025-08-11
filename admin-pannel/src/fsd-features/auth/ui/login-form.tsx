@@ -8,7 +8,7 @@ import { Checkbox } from "@/fsd-shared/ui/checkbox";
 function LoginForm() {
   const {
     control,
-    // formState: { errors },
+    formState: { errors },
     handleSubmit,
   } = useLoginForm();
 
@@ -24,9 +24,11 @@ function LoginForm() {
         name="email"
         control={control}
         rules={{
-          required: true,
-          pattern: new RegExp(/[A-z0-9]+\@[a-z]+\.[a-z]{1,}/),
-          min: 1,
+          required: { value: true, message: "This field is required" },
+          pattern: {
+            value: new RegExp(/[A-z0-9]+\@[a-z]+\.[a-z]{1,}/),
+            message: "Invalid email",
+          },
         }}
         render={({ field: { value, onChange, name } }) => (
           <Input
@@ -35,6 +37,7 @@ function LoginForm() {
             onChange={onChange}
             label="Email address"
             placeholder="Enter your email..."
+            errors={errors}
           />
         )}
       />
@@ -43,8 +46,11 @@ function LoginForm() {
         name="password"
         control={control}
         rules={{
-          required: true,
-          min: 8,
+          required: { value: true, message: "This field is required" },
+          minLength: {
+            value: 8,
+            message: "Password must contain at least 8 characters",
+          },
         }}
         render={({ field: { value, onChange, name } }) => (
           <Input
@@ -54,6 +60,7 @@ function LoginForm() {
             label="Password"
             placeholder="Enter your password..."
             isPassword
+            errors={errors}
           />
         )}
       />
