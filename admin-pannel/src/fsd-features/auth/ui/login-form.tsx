@@ -8,7 +8,7 @@ import { Checkbox } from "@/fsd-shared/ui/checkbox";
 function LoginForm() {
   const {
     control,
-    // formState: { errors },
+    formState: { errors },
     handleSubmit,
   } = useLoginForm();
 
@@ -23,11 +23,6 @@ function LoginForm() {
       <Controller
         name="email"
         control={control}
-        rules={{
-          required: true,
-          pattern: new RegExp(/[A-z0-9]+\@[a-z]+\.[a-z]{1,}/),
-          min: 1,
-        }}
         render={({ field: { value, onChange, name } }) => (
           <Input
             name={name}
@@ -35,6 +30,7 @@ function LoginForm() {
             onChange={onChange}
             label="Email address"
             placeholder="Enter your email..."
+            errors={errors}
           />
         )}
       />
@@ -42,10 +38,6 @@ function LoginForm() {
       <Controller
         name="password"
         control={control}
-        rules={{
-          required: true,
-          min: 8,
-        }}
         render={({ field: { value, onChange, name } }) => (
           <Input
             name={name}
@@ -54,6 +46,7 @@ function LoginForm() {
             label="Password"
             placeholder="Enter your password..."
             isPassword
+            errors={errors}
           />
         )}
       />
@@ -65,7 +58,7 @@ function LoginForm() {
           <label className="flex items-center gap-3 font-nunito-sans text-lg font-semibold text-stone-600 select-none">
             <Checkbox
               name={name}
-              isActive={value}
+              isActive={!!value}
               toggleActive={() => onChange(!value)}
             />
             Remember Password

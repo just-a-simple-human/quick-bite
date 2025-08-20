@@ -1,10 +1,13 @@
 "use client";
+import classNames from "classnames";
 import Link from "next/link";
 import { HTMLProps } from "react";
+import { FieldErrors } from "react-hook-form";
 
 interface InputProps extends HTMLProps<HTMLInputElement> {
   label?: string;
   isPassword?: boolean;
+  errors: FieldErrors<any>;
 }
 
 function Input({
@@ -14,9 +17,17 @@ function Input({
   placeholder,
   label,
   isPassword,
+  errors,
 }: InputProps) {
   return (
-    <div className="w-lg relative flex flex-col gap-2">
+    <div
+      className={classNames(
+        "w-lg relative flex flex-col gap-2 transition-all duration-300",
+        {
+          "pb-7": name && errors[name],
+        }
+      )}
+    >
       <label
         htmlFor={name}
         className="w-full font-nunito-sans text-lg text-stone-800"
@@ -41,6 +52,16 @@ function Input({
           Forget Password?
         </Link>
       ) : null}
+      {name && errors[name] && (
+        <span
+          className={classNames(
+            "absolute left-0 bottom-0 text-sm text-red-400 font-nunito-sans opacity-0",
+            { "animate-fade-in": name && errors[name] }
+          )}
+        >
+          {errors[name].message?.toString()}
+        </span>
+      )}
     </div>
   );
 }
