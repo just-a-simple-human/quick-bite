@@ -23,13 +23,6 @@ function LoginForm() {
       <Controller
         name="email"
         control={control}
-        rules={{
-          required: { value: true, message: "This field is required" },
-          pattern: {
-            value: new RegExp(/[A-z0-9]+\@[a-z]+\.[a-z]{1,}/),
-            message: "Invalid email",
-          },
-        }}
         render={({ field: { value, onChange, name } }) => (
           <Input
             name={name}
@@ -45,13 +38,6 @@ function LoginForm() {
       <Controller
         name="password"
         control={control}
-        rules={{
-          required: { value: true, message: "This field is required" },
-          minLength: {
-            value: 8,
-            message: "Password must contain at least 8 characters",
-          },
-        }}
         render={({ field: { value, onChange, name } }) => (
           <Input
             name={name}
@@ -72,7 +58,7 @@ function LoginForm() {
           <label className="flex items-center gap-3 font-nunito-sans text-lg font-semibold text-stone-600 select-none">
             <Checkbox
               name={name}
-              isActive={value}
+              isActive={!!value}
               toggleActive={() => onChange(!value)}
             />
             Remember Password

@@ -76,7 +76,7 @@ function RegisterForm() {
           <label className="flex items-center gap-3 font-nunito-sans text-lg font-semibold text-stone-600 select-none">
             <Checkbox
               name={name}
-              isActive={value}
+              isActive={!!value}
               toggleActive={() => onChange(!value)}
             />
             I accept terms and conditions

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { IRoute } from "@/fsd-shared";
 import { useAsideStore } from "../lib/store";
-import "./animation.css";
 
 interface IProps {
   route: IRoute;
@@ -26,8 +25,8 @@ function AsideTab({ route }: IProps) {
               (pathname.startsWith(href) && href.length > "/".length) ||
               (href === pathname && href === "/"),
             "bg-white **:fill-stone-800": !pathname.startsWith(href),
-            opened: isOpened,
-            closed: !isOpened,
+            "animate-open-aside": isOpened,
+            "animate-close-aside": !isOpened,
           }
         )}
         href={href}
