@@ -13,7 +13,9 @@ export class Category {
   id: number;
   @Column()
   name: string;
-  @ManyToMany(() => MenuItem, { cascade: ['update'] })
+  @ManyToMany(() => MenuItem, (menuItem) => menuItem.categories, {
+    cascade: ['update'],
+  })
   @JoinTable({
     name: 'category_menu_item',
     joinColumn: {

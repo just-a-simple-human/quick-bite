@@ -9,7 +9,7 @@ export class MenuItem {
   @Column()
   name: string;
   @Column()
-  description: string;
+  thumbnail: string;
   @Column()
   ingredients: string;
   @Column({ type: 'numeric' })
