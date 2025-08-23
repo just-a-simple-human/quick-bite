@@ -15,7 +15,7 @@ function MenuTableHeader() {
           Name
         </th>
         <th className="min-w-32 max-w-64 flex flex-1 items-center text-xl font-semibold text-stone-800">
-          Category
+          Categories
         </th>
         <th className="w-24 h-16 flex items-center text-xl font-semibold text-stone-800">
           Price
@@ -55,12 +55,21 @@ function MenuTableRow({ menuItem }: { menuItem: IMenuItem }) {
       </MenuTableTextCell>
 
       <MenuTableTextCell>
-        <Link
-          className="text-base text-stone-800"
-          href={`/category/${menuItem.category.id}`}
-        >
-          {menuItem.category.name}
-        </Link>
+        <span className="text-base text-stone-800">
+          {menuItem.categories.length
+            ? menuItem.categories.map((category, index) => (
+                <>
+                  {index === 0 ? "" : ", "}
+                  <Link
+                    className="text-base text-stone-800"
+                    href={`/category/${category?.id}`}
+                  >
+                    {category.name}
+                  </Link>
+                </>
+              ))
+            : "No category"}
+        </span>
       </MenuTableTextCell>
 
       <td className="w-24 flex items-center">
