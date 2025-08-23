@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { MoreVertSvg, RefreshSvg, IMenuItem } from "@/fsd-shared";
-import { Table } from "@/fsd-shared/ui/table";
 
 function MenuTableHeader() {
   return (

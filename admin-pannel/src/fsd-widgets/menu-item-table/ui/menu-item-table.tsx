@@ -1,7 +1,10 @@
 "use client";
-import { MenuTableHeader, MenuTableRow } from "@/fsd-entities/menu-item";
-import { getMenuItemAll } from "@/fsd-entities/menu-item/api/menu-item";
-import { useMenuTableStore } from "@/fsd-entities/menu-item/lib/menu-table-store";
+import {
+  menuItemApi,
+  MenuTableHeader,
+  MenuTableRow,
+  useMenuTableStore,
+} from "@/fsd-entities/menu-item";
 import { IMenuItem } from "@/fsd-shared";
 import { Table } from "@/fsd-shared";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -10,7 +13,7 @@ function MenuTable() {
   const page = useMenuTableStore((state) => state.currentPage);
   const { data, error, isPending, isPlaceholderData } = useQuery({
     queryKey: ["menu-item"],
-    queryFn: () => getMenuItemAll({ page }),
+    queryFn: () => menuItemApi.getAll({ page }),
     placeholderData: keepPreviousData,
     initialData: [],
   });
