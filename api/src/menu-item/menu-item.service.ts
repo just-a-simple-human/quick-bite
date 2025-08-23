@@ -18,6 +18,9 @@ export class MenuItemService {
 
   async findAll(page: number = 1, itemsPerPage: number = 5) {
     const response = await this.menuItemRepository.find({
+      relations: {
+        categories: true,
+      },
       take: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
     });
