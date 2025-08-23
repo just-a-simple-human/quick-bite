@@ -24,7 +24,7 @@ export class AuthService {
     const { password, ...response } = customer;
     return {
       ...response,
-      access_token: this.jwtService.sign({
+      auth_token: this.jwtService.sign({
         id: createCustomerDto.id,
         email: createCustomerDto.email,
         role: Role.Customer,
@@ -53,7 +53,7 @@ export class AuthService {
     const { password, ...response } = employee;
     return {
       ...response,
-      access_token: this.jwtService.sign({
+      auth_token: this.jwtService.sign({
         id: createEmployeeDto.id,
         email: createEmployeeDto.email,
         role: Role.Admin,
@@ -77,7 +77,7 @@ export class AuthService {
   async login(payload: IPayload, role: Role) {
     return {
       ...payload,
-      access_token: this.jwtService.sign({ ...payload, role: role }),
+      auth_token: this.jwtService.sign({ ...payload, role: role }),
     };
   }
 
