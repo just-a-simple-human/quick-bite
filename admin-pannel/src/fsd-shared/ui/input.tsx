@@ -28,10 +28,7 @@ function Input({
         }
       )}
     >
-      <label
-        htmlFor={name}
-        className="w-full font-nunito-sans text-lg text-stone-800"
-      >
+      <label htmlFor={name} className="w-full text-lg text-stone-800">
         {label}
       </label>
       <input
@@ -42,12 +39,12 @@ function Input({
         type={isPassword ? "password" : "text"}
         placeholder={placeholder}
         autoComplete={"on"}
-        className="w-full px-4 py-2 rounded-lg border border-stone-400 outline-0 font-nunito-sans text-base text-stone-800 placeholder:text-stone-400"
+        className="w-full px-4 py-2 rounded-lg border border-stone-400 outline-0 text-base text-stone-800 placeholder:text-stone-400"
       />
       {isPassword ? (
         <Link
           href={"/recover-paswword"}
-          className="absolute right-0 top-0 font-nunito-sans text-lg text-stone-400"
+          className="absolute right-0 top-0 text-lg text-stone-400"
         >
           Forget Password?
         </Link>
@@ -55,7 +52,7 @@ function Input({
       {name && errors[name] && (
         <span
           className={classNames(
-            "absolute left-0 bottom-0 text-sm text-red-400 font-nunito-sans opacity-0",
+            "absolute left-0 bottom-0 text-sm text-red-400 opacity-0",
             { "animate-fade-in": name && errors[name] }
           )}
         >

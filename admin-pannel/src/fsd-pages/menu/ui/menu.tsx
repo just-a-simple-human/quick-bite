@@ -4,7 +4,7 @@ import React from "react";
 
 function MenuPage() {
   return (
-    <main className="box-border max-w-full h-full p-8 bg-stone-100 overflow-y-auto">
+    <main className="max-w-full flex-1 p-8 bg-stone-100 overflow-y-auto">
       <ReactQueryProvider>
         <MenuTable />
       </ReactQueryProvider>

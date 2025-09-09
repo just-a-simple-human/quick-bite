@@ -73,7 +73,7 @@ function RegisterForm() {
           value: true,
         }}
         render={({ field: { value, onChange, name } }) => (
-          <label className="flex items-center gap-3 font-nunito-sans text-lg font-semibold text-stone-600 select-none">
+          <label className="flex items-center gap-3 text-lg font-semibold text-stone-600 select-none">
             <Checkbox
               name={name}
               isActive={!!value}
@@ -86,7 +86,7 @@ function RegisterForm() {
 
       <button
         type="submit"
-        className="w-md py-3 mx-auto mt-3 rounded-lg flex justify-center bg-orange-400 font-nunito-sans text-xl font-bold text-white"
+        className="w-md py-3 mx-auto mt-3 rounded-lg flex justify-center bg-orange-400 text-xl font-bold text-white"
       >
         Sign Up
       </button>

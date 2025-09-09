@@ -1,13 +1,9 @@
-export default function AuthLayout({
+import { AuthLayout } from "@/fsd-app/ui/auth-layout";
+
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <body>
-      <main className="min-w-screen min-h-screen flex justify-center items-center bg-orange-400">
-        {children}
-      </main>
-    </body>
-  );
+  return <AuthLayout>{children}</AuthLayout>;
 }
