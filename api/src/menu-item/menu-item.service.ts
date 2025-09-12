@@ -17,13 +17,16 @@ export class MenuItemService {
   }
 
   async findAll(page: number = 1, itemsPerPage: number = 5) {
-    const response = await this.menuItemRepository.find({
-      relations: {
-        categories: true,
-      },
-      take: itemsPerPage,
-      skip: (page - 1) * itemsPerPage,
-    });
+    const response = {
+      resources: await this.menuItemRepository.find({
+        relations: {
+          categories: true,
+        },
+        take: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
+      }),
+      count: await this.menuItemRepository.count(),
+    };
     return response;
   }
 
