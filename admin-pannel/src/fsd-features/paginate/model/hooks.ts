@@ -17,7 +17,7 @@ function usePagination({
   }, []);
 
   if (maxPage <= buttonCount) {
-    return formArray(1, buttonCount);
+    return formArray(1, maxPage);
   }
 
   const halfLength = useMemo(() => Math.ceil(buttonCount / 2), [buttonCount]);
