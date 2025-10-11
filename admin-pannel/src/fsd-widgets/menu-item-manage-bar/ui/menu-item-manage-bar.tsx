@@ -18,11 +18,11 @@ function MenuItemManageBar() {
       </div>
       <FilterMenuItemButton />
       <Link
-        href={"/menu-item/add"}
+        href={"/menu/add"}
         className="rounded-2xl col-span-1 flex justify-center items-center gap-2 bg-white border border-stone-400 text-lg font-medium text-stone-800 transition-all duration-300 hover:bg-stone-50 active:bg-stone-100"
       >
         Add new
-        <PlusSvg fill="#292524" />
+        <PlusSvg className="**:fill-stone-800" />
       </Link>
     </div>
   );

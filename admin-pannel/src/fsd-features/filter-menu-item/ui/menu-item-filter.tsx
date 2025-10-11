@@ -9,10 +9,11 @@ function MenuItemFilter() {
   return (
     <div
       className={classNames(
-        "overflow-hidden w-full px-6 rounded-2xl transition-all duration-300",
+        "overflow-hidden w-full px-6 rounded-2xl transition-[all,border] duration-300",
         {
-          "h-0": !isOpened,
-          "h-16 mb-4 py-3 bg-white border border-stone-400": isOpened,
+          "h-0 border-transparent delay-0": !isOpened,
+          "h-16 mb-4 py-3 bg-white border border-stone-400  delay-[0ms,150ms]":
+            isOpened,
         }
       )}
     ></div>

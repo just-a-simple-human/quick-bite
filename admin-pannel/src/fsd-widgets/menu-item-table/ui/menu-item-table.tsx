@@ -17,14 +17,12 @@ function MenuTable() {
   const { currentPage, itemsPerPage, setCurrentPage } = useMenuTableStore(
     (state) => state
   );
-  const { data, error, isPlaceholderData, refetch, isPending } = useQuery<
-    IGetMenuItemAllDto,
-    AxiosError
-  >({
-    queryKey: ["menu-item", `page=${currentPage}`],
-    queryFn: () => menuItemApi.getAll({ page: currentPage }),
-    placeholderData: keepPreviousData,
-  });
+  const { data, error, isPlaceholderData, refetch, isPending, isRefetching } =
+    useQuery<IGetMenuItemAllDto, AxiosError>({
+      queryKey: ["menu-item", `page=${currentPage}`],
+      queryFn: () => menuItemApi.getAll({ page: currentPage }),
+      placeholderData: keepPreviousData,
+    });
 
   if (error?.status === 401) redirect("/login");
   if (error?.status) {
@@ -57,7 +55,7 @@ function MenuTable() {
             isSelected={false}
           />
         )}
-        isLoading={isPlaceholderData}
+        isLoading={isPlaceholderData || isRefetching}
       />
       <Pagination
         currentPage={currentPage}

@@ -140,7 +140,7 @@ export function FilterSvg({ fill }: SVGAttributes<unknown>) {
   );
 }
 
-export function PlusSvg({ fill }: SVGAttributes<unknown>) {
+export function MinusSvg({ className }: SVGAttributes<unknown>) {
   return (
     <svg
       width="24"
@@ -148,10 +148,77 @@ export function PlusSvg({ fill }: SVGAttributes<unknown>) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path d="M18 13H6C5.45 13 5 12.55 5 12C5 11.45 5.45 11 6 11H18C18.55 11 19 11.45 19 12C19 12.55 18.55 13 18 13Z" />
+    </svg>
+  );
+}
+
+export function PlusSvg({ className }: SVGAttributes<unknown>) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path d="M18 13H13V18C13 18.55 12.55 19 12 19C11.45 19 11 18.55 11 18V13H6C5.45 13 5 12.55 5 12C5 11.45 5.45 11 6 11H11V6C11 5.45 11.45 5 12 5C12.55 5 13 5.45 13 6V11H18C18.55 11 19 11.45 19 12C19 12.55 18.55 13 18 13Z" />
+    </svg>
+  );
+}
+
+export function AddImageSvg({ className }: SVGAttributes<unknown>) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
-        d="M18 13H13V18C13 18.55 12.55 19 12 19C11.45 19 11 18.55 11 18V13H6C5.45 13 5 12.55 5 12C5 11.45 5.45 11 6 11H11V6C11 5.45 11.45 5 12 5C12.55 5 13 5.45 13 6V11H18C18.55 11 19 11.45 19 12C19 12.55 18.55 13 18 13Z"
-        fill={fill ?? "#323232"}
+        d="M21.02 5H19V2.98C19 2.44 18.56 2 18.02 2H17.99C17.44 2 17 2.44 17 2.98V5H14.99C14.45 5 14.01 5.44 14 5.98V6.01C14 6.56 14.44 7 14.99 7H17V9.01C17 9.55 17.44 10 17.99 9.99H18.02C18.56 9.99 19 9.55 19 9.01V7H21.02C21.56 7 22 6.56 22 6.02V5.98C22 5.44 21.56 5 21.02 5ZM16 9.01V8H14.99C14.46 8 13.96 7.79 13.58 7.42C13.21 7.04 13 6.54 13 5.98C13 5.62 13.1 5.29 13.27 5H5C3.9 5 3 5.9 3 7V19C3 20.1 3.9 21 5 21H17C18.1 21 19 20.1 19 19V10.72C18.7 10.89 18.36 11 17.98 11C16.89 10.99 16 10.1 16 9.01ZM15.96 19H6C5.59 19 5.35 18.53 5.6 18.2L7.58 15.57C7.79 15.29 8.2 15.31 8.4 15.59L10 18L12.61 14.52C12.81 14.26 13.2 14.25 13.4 14.51L16.35 18.19C16.61 18.52 16.38 19 15.96 19Z"
+        fill="#323232"
+      />
+    </svg>
+  );
+}
+
+export function ArrowDownSvg({ className }: SVGAttributes<unknown>) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M8.11997 9.29006L12 13.1701L15.88 9.29006C16.27 8.90006 16.9 8.90006 17.29 9.29006C17.68 9.68006 17.68 10.3101 17.29 10.7001L12.7 15.2901C12.31 15.6801 11.68 15.6801 11.29 15.2901L6.69997 10.7001C6.30997 10.3101 6.30997 9.68006 6.69997 9.29006C7.08997 8.91006 7.72997 8.90006 8.11997 9.29006Z"
+        fill="#323232"
+      />
+    </svg>
+  );
+}
+
+export function CrossSvg({ className }: SVGAttributes<unknown>) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M18.3002 5.70997C17.9102 5.31997 17.2802 5.31997 16.8902 5.70997L12.0002 10.59L7.11022 5.69997C6.72022 5.30997 6.09021 5.30997 5.70021 5.69997C5.31021 6.08997 5.31021 6.71997 5.70021 7.10997L10.5902 12L5.70021 16.89C5.31021 17.28 5.31021 17.91 5.70021 18.3C6.09021 18.69 6.72022 18.69 7.11022 18.3L12.0002 13.41L16.8902 18.3C17.2802 18.69 17.9102 18.69 18.3002 18.3C18.6902 17.91 18.6902 17.28 18.3002 16.89L13.4102 12L18.3002 7.10997C18.6802 6.72997 18.6802 6.08997 18.3002 5.70997Z"
+        fill="#323232"
       />
     </svg>
   );
