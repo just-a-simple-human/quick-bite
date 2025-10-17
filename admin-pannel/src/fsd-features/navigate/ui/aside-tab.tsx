@@ -19,30 +19,21 @@ function AsideTab({ route }: IProps) {
     <li className="w-full px-6 h-fit">
       <Link
         className={classNames(
-          "p-4 w-52 rounded-lg relative flex items-center gap-4",
+          "overflow-clip p-4 rounded-lg relative flex items-center gap-4 transition-all duration-300 text-base font-semibold",
           {
-            "bg-orange-400 **:fill-white":
+            "bg-orange-400 **:fill-white text-white":
               (pathname.startsWith(href) && href.length > "/".length) ||
               (href === pathname && href === "/"),
-            "bg-white **:fill-stone-800": !pathname.startsWith(href),
-            "animate-open-aside": isOpened,
-            "animate-close-aside": !isOpened,
+            "bg-white **:fill-stone-800 text-stone-800":
+              !pathname.startsWith(href),
+            "w-14": !isOpened,
+            "w-52": isOpened,
           }
         )}
         href={href}
       >
         <Icon className="shrink-0" />
-        <span
-          className={classNames("text-base font-semibold", {
-            "text-white":
-              (pathname.startsWith(href) && href.length > "/".length) ||
-              (href === pathname && href === "/"),
-            "text-stone-800": !pathname.startsWith(href),
-          })}
-          hidden={!isOpened}
-        >
-          {title}
-        </span>
+        {title}
       </Link>
     </li>
   );

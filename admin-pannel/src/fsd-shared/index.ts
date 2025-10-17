@@ -11,3 +11,6 @@ export type { ICategory } from "./types/category";
 
 export { Input } from "./ui/input";
 export { Table } from "./ui/table";
+export { NumberInput } from "./ui/number-input";
+
+export { useClickOutside } from "./helpers/use-click-outside";

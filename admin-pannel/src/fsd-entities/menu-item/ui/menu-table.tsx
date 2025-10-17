@@ -8,8 +8,11 @@ function MenuTableHeader({ onClick }: { onClick: MouseEventHandler }) {
   return (
     <thead className="w-full not-[last-child]:border-b not-[last-child]:border-b-stone-400">
       <tr className="w-full px-6 py-3 flex items-center gap-8">
-        <th className="min-w-48 max-w-64 flex flex-1 items-center text-xl font-semibold text-stone-800">
-          Menu
+        <th className="w-24 flex items-center text-xl font-semibold text-stone-800">
+          Image
+        </th>
+        <th className="min-w-16 max-w-48 flex flex-1 items-center text-xl font-semibold text-stone-800">
+          Name
         </th>
         <th className="min-w-32 flex flex-1 items-center text-xl font-semibold text-stone-800">
           Categories
@@ -53,7 +56,7 @@ function MenuTableRow({
         />
       </td>
 
-      <td className="min-w-16 max-w-32 flex flex-1 items-center font-medium text-lg text-stone-800">
+      <td className="min-w-16 max-w-48 flex flex-1 items-center font-medium text-lg text-stone-800">
         {menuItem.name}
       </td>
 

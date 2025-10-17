@@ -5,30 +5,28 @@
   --foreground: #171717;
 }
 
-@keyframes open-aside {
-  from {
-    width: 56px;
-  }
-  to {
-    width: 208px;
-  }
-}
-
-@keyframes close-aside {
-  from {
-    width: 208px;
-  }
-  to {
-    width: 56px;
-  }
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@layer base {
+  html {
+    interpolate-size: allow-keywords;
+  }
+  * {
+    outline: none;
+  }
+  *:focus {
+    outline: none;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
   }
 }
 
@@ -39,8 +37,6 @@
   --font-mono: var(--font-geist-mono);
   --font-nunito-sans: var(--nunito-sans);
   --animate-fade-in: fade-in 250ms 300ms forwards;
-  --animate-open-aside: open-aside 250ms forwards;
-  --animate-close-aside: close-aside 250ms forwards;
 }
 
 @media (prefers-color-scheme: dark) {
