@@ -1,11 +1,5 @@
 import { MenuItem } from 'src/entities/menu-item.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Category {
@@ -13,19 +7,6 @@ export class Category {
   id: number;
   @Column()
   name: string;
-  @ManyToMany(() => MenuItem, (menuItem) => menuItem.categories, {
-    cascade: ['update'],
-  })
-  @JoinTable({
-    name: 'category_menu_item',
-    joinColumn: {
-      name: 'category_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'menu_item_id',
-      referencedColumnName: 'id',
-    },
-  })
+  @OneToMany(() => MenuItem, (menuItem) => menuItem.category)
   menuItems: MenuItem[];
 }
