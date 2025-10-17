@@ -1,6 +1,10 @@
+import { Category } from 'src/entities/category.entity';
+import { Tag } from 'src/entities/tag.entity';
+
 export class CreateMenuItemDto {
-  id: number;
-  description: string;
-  ingredients: string;
+  name: string;
+  thumbnail: string;
+  category: Category;
+  tags: Tag[];
   price: number;
 }

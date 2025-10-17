@@ -20,7 +20,7 @@ export class MenuItemService {
     const response = {
       resources: await this.menuItemRepository.find({
         relations: {
-          categories: true,
+          category: true,
         },
         take: itemsPerPage,
         skip: (page - 1) * itemsPerPage,

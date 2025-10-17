@@ -1,6 +1,13 @@
 import { Category } from 'src/entities/category.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Order } from './order.entity';
+import { Tag } from './tag.entity';
 
 @Entity({ name: 'menu_item' })
 export class MenuItem {
@@ -10,14 +17,12 @@ export class MenuItem {
   name: string;
   @Column()
   thumbnail: string;
-  @Column()
-  ingredients: string;
   @Column({ type: 'numeric' })
   price: number;
-  @ManyToMany(() => Category, (category) => category.menuItems, {
-    cascade: ['update'],
-  })
-  categories: Category[];
+  @ManyToOne(() => Category, (category) => category.menuItems)
+  category: Category;
+  @ManyToMany(() => Tag, (tag) => tag.menuItems)
+  tags: Tag[];
   @ManyToMany(() => Order)
   orders: Order[];
 }
