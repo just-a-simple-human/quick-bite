@@ -4,7 +4,7 @@ import { View } from "react-native";
 export default function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
-      <ThemedText>Home</ThemedText>
+      <ThemedText>Map</ThemedText>
     </View>
   );
 }
