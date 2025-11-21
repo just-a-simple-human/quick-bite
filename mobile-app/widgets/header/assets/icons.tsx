@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 
-export function AccountIcon({ style }: { style: "dark" | "light" }) {
+export const AccountIcon = ({ style }: { style: "dark" | "light" }) => {
   return (
     <Image
       style={{ width: 32, height: 32 }}
@@ -11,9 +11,9 @@ export function AccountIcon({ style }: { style: "dark" | "light" }) {
       }
     />
   );
-}
+};
 
-export function Logo({ style }: { style: "dark" | "light" }) {
+export const Logo = ({ style }: { style: "dark" | "light" }) => {
   return (
     <Image
       style={{
@@ -27,4 +27,4 @@ export function Logo({ style }: { style: "dark" | "light" }) {
       }
     />
   );
-}
+};

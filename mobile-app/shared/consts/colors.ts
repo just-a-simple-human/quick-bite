@@ -3,7 +3,7 @@ import { DefaultTheme, Theme } from "@react-navigation/native";
 const LightAppTheme: Theme = {
   colors: {
     background: "#E7E5E4",
-    border: "#f5f5f4",
+    border: "#79716B",
     card: "#ffffff",
     notification: "#ef4444",
     primary: "#f59e0b",
@@ -16,7 +16,7 @@ const LightAppTheme: Theme = {
 const DarkAppTheme: Theme = {
   colors: {
     background: "#57534D",
-    border: "#f5f5f4",
+    border: "#79716B",
     card: "#292524",
     notification: "#ef4444",
     primary: "#f59e0b",

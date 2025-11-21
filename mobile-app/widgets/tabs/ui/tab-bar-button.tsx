@@ -12,6 +12,7 @@ import {
 } from "@react-navigation/bottom-tabs";
 import { styles } from "./styles";
 import { useSegments } from "expo-router";
+import { DarkAppTheme } from "@/shared/consts/colors";
 
 interface IProps {
   route: NavigationRoute<ParamListBase, string>;
@@ -46,7 +47,7 @@ const TabBarButton = ({ route, options, navigation }: IProps) => {
         style={[
           styles.tabBarTitle,
           {
-            color: isActive ? "#ffffff" : theme.colors.text,
+            color: isActive ? DarkAppTheme.colors.text : theme.colors.text,
           },
         ]}
       >

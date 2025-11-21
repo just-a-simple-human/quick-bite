@@ -6,7 +6,7 @@ import { AccountIcon, Logo } from "../assets/icons";
 import { styles } from "./style";
 import { Image } from "expo-image";
 
-function Header() {
+const  Header = () => {
   const theme = useTheme();
 
   return (

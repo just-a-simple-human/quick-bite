@@ -24,6 +24,18 @@ export default function RootLayout() {
             header: () => <Header />,
           }}
         />
+        <Stack.Screen
+          name="sign-up"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="sign-in"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
       <SystemBars
         style={{ statusBar: "auto", navigationBar: "auto" }}
