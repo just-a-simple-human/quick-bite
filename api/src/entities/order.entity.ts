@@ -16,10 +16,10 @@ export class Order {
   id: number;
   @Column()
   status: string;
-  @ManyToOne(() => Customer, (customer) => customer.orders)
+  @ManyToOne(() => Customer, (customer) => customer.orders, { cascade: true })
   @JoinColumn({ name: 'customer_id', referencedColumnName: 'id' })
   customer: Customer;
-  @ManyToMany(() => MenuItem)
+  @ManyToMany(() => MenuItem, { cascade: true })
   @JoinTable({
     name: 'order_menu_item',
     joinColumn: { name: 'order_id' },

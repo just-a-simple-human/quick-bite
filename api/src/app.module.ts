@@ -10,6 +10,9 @@ import { AuthModule } from './auth/auth.module';
 import { EmployeeModule } from './employee/employee.module';
 import { OrderModule } from './order/order.module';
 import { TagModule } from './tag/tag.module';
+import { EmailModule } from './email/email.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { VerificationModule } from './verification/verification.module';
 
 @Module({
   imports: [
@@ -28,6 +31,23 @@ import { TagModule } from './tag/tag.module';
         synchronize: true,
       }),
     }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configeService: ConfigService) => ({
+        transport: {
+          host: 'smtp.gmail.com',
+          port: 587,
+          from: '"No Reply" <noreply@example.com>',
+          service: 'gmail',
+          secure: false,
+          auth: {
+            user: configeService.get('GOOGLE_CLIENT_USER'),
+            pass: configeService.get('GOOGLE_PASSWORD'),
+          },
+        },
+      }),
+    }),
     MenuItemModule,
     CategoryModule,
     CustomerModule,
@@ -35,6 +55,8 @@ import { TagModule } from './tag/tag.module';
     EmployeeModule,
     OrderModule,
     TagModule,
+    EmailModule,
+    VerificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -26,6 +26,7 @@ export class CustomerService {
   async findOneByEmail(email: string) {
     const response = await this.customerRepository.findOne({
       where: { email },
+      relations: { verification: true },
     });
     if (!response) {
       throw new NotFoundException();
