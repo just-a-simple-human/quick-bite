@@ -37,8 +37,9 @@ export class CustomerController {
     },
     (customer: Customer) => customer.id,
   )
-  getProfileById(@Param('id') id: string) {
-    const response = this.customerService.findOneById(+id);
+  async getProfileById(@Param('id') id: string) {
+    const { password, ...response } =
+      await this.customerService.findOneById(+id);
     return response;
   }
 

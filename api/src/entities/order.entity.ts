@@ -19,7 +19,7 @@ export class Order {
   @ManyToOne(() => Customer, (customer) => customer.orders)
   @JoinColumn({ name: 'customer_id', referencedColumnName: 'id' })
   customer: Customer;
-  @ManyToMany(() => MenuItem)
+  @ManyToMany(() => MenuItem, { cascade: true })
   @JoinTable({
     name: 'order_menu_item',
     joinColumn: { name: 'order_id' },
