@@ -15,7 +15,7 @@ const SignUp = () => {
     <SafeAreaView
       style={[styles.signUpScreen, { backgroundColor: theme.colors.card }]}
     >
-      <ThemedText style={styles.title}>Create new account!</ThemedText>
+      <ThemedText style={styles.title}>Create account!</ThemedText>
       <SignUpForm />
       <ThemedText style={styles.bottomText}>
         Already have an account?{" "}

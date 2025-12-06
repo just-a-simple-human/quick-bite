@@ -11,6 +11,7 @@ export default function TabLayout() {
     <Tabs
       tabBar={(props) => <TabBar {...props} />}
       screenOptions={{ headerShown: false }}
+      initialRouteName="index"
     >
       <Tabs.Screen
         name="map"
