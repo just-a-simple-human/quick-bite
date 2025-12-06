@@ -16,7 +16,7 @@ export class Order {
   id: number;
   @Column()
   status: string;
-  @ManyToOne(() => Customer, (customer) => customer.orders, { cascade: true })
+  @ManyToOne(() => Customer, (customer) => customer.orders)
   @JoinColumn({ name: 'customer_id', referencedColumnName: 'id' })
   customer: Customer;
   @ManyToMany(() => MenuItem, { cascade: true })
