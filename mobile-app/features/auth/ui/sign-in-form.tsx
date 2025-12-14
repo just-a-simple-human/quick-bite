@@ -16,8 +16,8 @@ const SignInForm = () => {
   return (
     <View style={styles.form}>
       <Controller
-        control={control}
         name="email"
+        control={control}
         render={({ field: { value, onChange } }) => (
           <Input
             value={value}
@@ -26,13 +26,14 @@ const SignInForm = () => {
             placeholder="Enter your email"
             keyboardType="email-address"
             textContentType="emailAddress"
+            autoComplete="email"
             inputMode="email"
           />
         )}
       />
       <Controller
-        control={control}
         name="password"
+        control={control}
         render={({ field: { value, onChange } }) => (
           <Input
             value={value}

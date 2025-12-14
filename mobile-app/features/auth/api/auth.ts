@@ -3,7 +3,11 @@ import { ILoginDto, IRegisterDto } from "../types/dto";
 
 export const authApi = {
   async register(data: IRegisterDto) {
-    const response = await api.post("/auth/customer/register", data);
+    const response = await api.post("/auth/customer/register", {
+      email: data.email,
+      password: data.password,
+      name: data.username,
+    });
     return response;
   },
   async login(data: ILoginDto) {
