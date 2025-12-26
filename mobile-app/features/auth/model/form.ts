@@ -6,6 +6,7 @@ import { authApi } from "../api/auth";
 import { verificationApi } from "@/features/verify";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 function useLoginForm() {
   return useForm({
@@ -34,20 +35,22 @@ function useRegisterForm() {
 const loginSubmitHandler: SubmitHandler<InferType<typeof authSchema>> = async (
   data
 ) => {
-  const response = await authApi.login({
-    email: data.email,
-    password: data.password,
-  });
-  if (response.status === 201) {
+  try {
+    const response = await authApi.login({
+      email: data.email,
+      password: data.password,
+    });
+    await SecureStore.setItemAsync("auth_token", response.data["auth_token"]);
+    router.push("/");
+  } catch (error) {
+    console.error(error);
   }
 };
 
 const registerSubmitHandler: SubmitHandler<
   InferType<typeof registerSchema>
 > = async (data) => {
-  console.log("TEST");
   try {
-    console.log("SENDING REGISTRATION");
     await authApi.register({
       email: data.email,
       username: data.username,

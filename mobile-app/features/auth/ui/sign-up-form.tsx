@@ -21,15 +21,20 @@ const SignUpForm = () => {
       <Controller
         name="email"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({
+          field: { value, onChange, name },
+          fieldState: { error },
+        }) => (
           <Input
             label="Email"
             placeholder="Enter your email"
             keyboardType="email-address"
             textContentType="emailAddress"
-            inputMode="email"
+            autoComplete="email"
             value={value}
             onChangeText={onChange}
+            name={name}
+            error={error}
           />
         )}
       />
@@ -37,18 +42,19 @@ const SignUpForm = () => {
       <Controller
         name="username"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({
+          field: { value, onChange, name },
+          fieldState: { error },
+        }) => (
           <Input
             label="Username"
             placeholder="Enter your username"
-            keyboardType="default"
             textContentType="username"
             autoComplete="username-new"
-            contextMenuHidden
-            disableKeyboardShortcuts
-            inputMode="text"
             value={value}
             onChangeText={onChange}
+            name={name}
+            error={error}
           />
         )}
       />
@@ -56,14 +62,17 @@ const SignUpForm = () => {
       <Controller
         name="password"
         control={control}
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { onChange, name }, fieldState: { error } }) => (
           <Input
             label="Password"
             placeholder="Enter your password"
-            textContentType="newPassword"
             secureTextEntry
-            value={value}
-            onChangeText={onChange}
+            autoComplete="new-password"
+            textContentType="oneTimeCode"
+            onChangeText={(text) => onChange(text)}
+            name={name}
+            error={error}
+            inputMode="text"
           />
         )}
       />
