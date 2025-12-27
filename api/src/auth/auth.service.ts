@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import { CustomerService } from 'src/customer/customer.service';
@@ -17,6 +21,14 @@ export class AuthService {
   ) {}
 
   async registerCustomer(createCustomerDto: CreateCustomerDto) {
+    const alreadyExists = await this.customerService.findOneByEmail(
+      createCustomerDto.email,
+    );
+    if (!!alreadyExists) {
+      throw new ConflictException({
+        email: 'User with such email already exists',
+      });
+    }
     const customer = await this.customerService.create({
       ...createCustomerDto,
       password: await hash(createCustomerDto.password),
