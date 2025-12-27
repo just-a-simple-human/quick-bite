@@ -3,6 +3,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { authSchema, registerSchema } from "../types/schema";
 import { InferType } from "yup";
 import { authApi } from "../api/auth";
+import { verificationApi } from "@/features/verify";
+import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 function useLoginForm() {
   return useForm({
@@ -31,23 +35,34 @@ function useRegisterForm() {
 const loginSubmitHandler: SubmitHandler<InferType<typeof authSchema>> = async (
   data
 ) => {
-  const response = await authApi.login({
-    email: data.email,
-    password: data.password,
-  });
-  if (response.status === 201) {
+  try {
+    const response = await authApi.login({
+      email: data.email,
+      password: data.password,
+    });
+    await SecureStore.setItemAsync("auth_token", response.data["auth_token"]);
+    router.push("/");
+  } catch (error) {
+    console.error(error);
   }
 };
 
 const registerSubmitHandler: SubmitHandler<
   InferType<typeof registerSchema>
 > = async (data) => {
-  const response = await authApi.register({
-    email: data.email,
-    username: data.username,
-    password: data.password,
-  });
-  if (response.status === 201) {
+  try {
+    await authApi.register({
+      email: data.email,
+      username: data.username,
+      password: data.password,
+    });
+
+    await AsyncStorage.setItem("account-email", data.email);
+
+    await verificationApi.sendCode(data.email);
+    router.push("/verification");
+  } catch (e) {
+    console.error(e);
   }
 };
 

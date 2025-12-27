@@ -1,68 +1,73 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "@/shared/ui/input/input";
 import { styles } from "./styles";
 import { useTheme } from "@react-navigation/native";
-import { Checkbox } from "@/shared/ui/checkbox";
 import { ThemedText } from "@/shared/ui/themed";
 import { Link } from "expo-router";
-import { useLoginForm } from "../model/form";
+import { loginSubmitHandler, useLoginForm } from "../model/form";
 import { Controller } from "react-hook-form";
 
 const SignInForm = () => {
   const theme = useTheme();
-  const { control } = useLoginForm();
+  const { control, handleSubmit } = useLoginForm();
 
   return (
     <View style={styles.form}>
       <Controller
-        control={control}
         name="email"
-        render={({ field: { value, onChange } }) => (
+        control={control}
+        render={({
+          field: { value, onChange, name },
+          fieldState: { error },
+        }) => (
           <Input
-            value={value}
-            onChangeText={onChange}
             label="Email"
             placeholder="Enter your email"
             keyboardType="email-address"
             textContentType="emailAddress"
-            inputMode="email"
+            autoComplete="email"
+            value={value}
+            onChangeText={onChange}
+            name={name}
+            error={error}
           />
         )}
       />
       <Controller
-        control={control}
         name="password"
-        render={({ field: { value, onChange } }) => (
+        control={control}
+        render={({ field: { onChange, name, ref }, fieldState: { error } }) => (
           <Input
-            value={value}
+            ref={ref}
             onChangeText={onChange}
             label="Password"
             placeholder="Enter your password"
-            textContentType="newPassword"
+            textContentType="password"
             secureTextEntry
-            bottomLink={() => (
-              <View>
-                <ThemedText style={styles.recoverPasswordText}>
-                  Forgot your password?{" "}
-                  <Link
-                    style={[
-                      styles.recoverPasswordLink,
-                      { color: theme.colors.primary },
-                    ]}
-                    href={"/recover-password"}
-                  >
-                    Recover now
-                  </Link>
-                </ThemedText>
-              </View>
+            BottomLink={() => (
+              <ThemedText style={styles.recoverPasswordText}>
+                Forgot your password?{" "}
+                <Link
+                  style={[
+                    styles.recoverPasswordLink,
+                    { color: theme.colors.primary },
+                  ]}
+                  href={"/recover-password"}
+                >
+                  Recover now
+                </Link>
+              </ThemedText>
             )}
+            name={name}
+            error={error}
           />
         )}
       />
 
       <TouchableOpacity
         style={[styles.submitButton, { backgroundColor: theme.colors.primary }]}
+        onPress={(e) => handleSubmit(loginSubmitHandler)(e)}
       >
         <Text style={styles.submitButtonText}>Sign In</Text>
       </TouchableOpacity>

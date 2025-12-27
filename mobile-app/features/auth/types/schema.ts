@@ -10,11 +10,13 @@ const authSchema = object({
 const registerSchema = authSchema.concat(
   object({
     username: string().required("This field is required"),
-    termsAndConditions: boolean().test(
-      "termsAndConditions",
-      "Please confirm your acceptance of the terms and conditions",
-      (value) => value
-    ),
+    termsAndConditions: boolean()
+      .required()
+      .test(
+        "termsAndConditions",
+        "Please confirm your acceptance of the terms and conditions",
+        (value) => value
+      ),
   })
 );
 

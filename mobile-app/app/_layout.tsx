@@ -18,24 +18,10 @@ export default function RootLayout() {
       value={colorScheme === "dark" ? DarkAppTheme : LightAppTheme}
     >
       <Stack initialRouteName="(tabs)">
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            header: () => <Header />,
-          }}
-        />
-        <Stack.Screen
-          name="sign-up"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="sign-in"
-          options={{
-            headerShown: false,
-          }}
-        />
+        <Stack.Screen name="(tabs)" options={{ header: () => <Header /> }} />
+        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+        <Stack.Screen name="verification" options={{ headerShown: false }} />
       </Stack>
       <SystemBars
         style={{ statusBar: "auto", navigationBar: "auto" }}
