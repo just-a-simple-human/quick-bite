@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
@@ -47,7 +48,7 @@ export class AuthService {
   async validateCustomer(email: string, password: string) {
     const customer = await this.customerService.findOneByEmail(email);
     if (!customer) {
-      throw new NotFoundException();
+      return null;
     }
     const isPasswordMatch = await verify(customer.password, password);
     if (isPasswordMatch) {
@@ -66,7 +67,6 @@ export class AuthService {
     return {
       ...response,
       auth_token: this.jwtService.sign({
-        id: createEmployeeDto.id,
         email: createEmployeeDto.email,
         role: Role.Admin,
       }),
@@ -76,7 +76,7 @@ export class AuthService {
   async validateEmployee(email: string, password: string) {
     const employee = await this.employeeService.findOneByEmail(email);
     if (!employee) {
-      throw new NotFoundException();
+      return null;
     }
     const isPasswordMatch = await verify(employee.password, password);
     if (isPasswordMatch) {
@@ -94,28 +94,16 @@ export class AuthService {
   }
 
   async loginCustomer(payload: IPayload) {
-    const customer = await this.customerService.findOneByEmail(payload.email);
-    if (!customer) {
-      throw new NotFoundException();
-    }
     const response = await this.login(
       {
-        id: customer.id,
-        email: customer.email,
+        email: payload.email,
       },
       Role.Customer,
     );
     return response;
   }
   async loginEmployee(payload: IPayload) {
-    const employee = await this.employeeService.findOneByEmail(payload.email);
-    if (!employee) {
-      throw new NotFoundException();
-    }
-    const response = this.login(
-      { id: employee.id, email: employee.email },
-      Role.Admin,
-    );
+    const response = this.login({ email: payload.email }, Role.Admin);
     return response;
   }
 }

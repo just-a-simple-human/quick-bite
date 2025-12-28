@@ -32,9 +32,6 @@ export class CustomerService {
       where: { email },
       relations: { verification: true },
     });
-    if (!response) {
-      throw new NotFoundException();
-    }
     return response;
   }
 
