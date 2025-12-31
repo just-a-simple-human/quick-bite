@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
   header: { height: 28 },
   label: {
     fontSize: 18,
-
     fontWeight: "500",
   },
   inputField: {
@@ -21,10 +20,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
   },
-  error: {
-    fontSize: 14,
-  },
   errorContainer: { height: 20 },
+  error: { fontSize: 14 },
   footer: {
     height: 24,
     position: "absolute",

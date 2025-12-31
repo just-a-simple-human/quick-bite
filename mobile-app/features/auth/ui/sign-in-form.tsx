@@ -7,10 +7,19 @@ import { ThemedText } from "@/shared/ui/themed";
 import { Link } from "expo-router";
 import { loginSubmitHandler, useLoginForm } from "../model/form";
 import { Controller } from "react-hook-form";
+import { serverErrorHandler } from "@/shared/utils/server-error-handler";
+import { SubmitButton } from "./submit-button";
 
 const SignInForm = () => {
   const theme = useTheme();
-  const { control, handleSubmit } = useLoginForm();
+
+  const {
+    control,
+    formState: { errors },
+    setError,
+    clearErrors,
+    handleSubmit,
+  } = useLoginForm();
 
   return (
     <View style={styles.form}>
@@ -65,12 +74,17 @@ const SignInForm = () => {
         )}
       />
 
-      <TouchableOpacity
-        style={[styles.submitButton, { backgroundColor: theme.colors.primary }]}
-        onPress={(e) => handleSubmit(loginSubmitHandler)(e)}
-      >
-        <Text style={styles.submitButtonText}>Sign In</Text>
-      </TouchableOpacity>
+      <SubmitButton
+        errors={errors}
+        buttonText="Sign In"
+        onPress={(e) =>
+          handleSubmit(
+            loginSubmitHandler((error) =>
+              serverErrorHandler<typeof errors>(error, setError, clearErrors)
+            )
+          )(e)
+        }
+      />
     </View>
   );
 };

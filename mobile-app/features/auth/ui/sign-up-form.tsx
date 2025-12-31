@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Input } from "@/shared/ui/input/input";
 import { styles } from "./styles";
 import { useTheme } from "@react-navigation/native";
@@ -7,11 +7,20 @@ import { Checkbox } from "@/shared/ui/checkbox";
 import { ThemedText } from "@/shared/ui/themed";
 import { registerSubmitHandler, useRegisterForm } from "../model/form";
 import { Controller } from "react-hook-form";
+import { serverErrorHandler } from "@/shared/utils/server-error-handler";
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+} from "react-native-reanimated";
+import { SubmitButton } from "./submit-button";
 
 const SignUpForm = () => {
-  const theme = useTheme();
   const {
     control,
+    setError,
+    clearErrors,
     formState: { errors },
     handleSubmit,
   } = useRegisterForm();
@@ -91,14 +100,17 @@ const SignUpForm = () => {
         <ThemedText>I accept the terms and privacy policy</ThemedText>
       </View>
 
-      <TouchableOpacity
-        style={[styles.submitButton, { backgroundColor: theme.colors.primary }]}
-        onPress={(e) => {
-          handleSubmit(registerSubmitHandler)(e);
-        }}
-      >
-        <Text style={styles.submitButtonText}>Sign Up</Text>
-      </TouchableOpacity>
+      <SubmitButton
+        errors={errors}
+        buttonText="Sign Up"
+        onPress={(e) =>
+          handleSubmit(
+            registerSubmitHandler((error) =>
+              serverErrorHandler<typeof errors>(error, setError, clearErrors)
+            )
+          )(e)
+        }
+      />
     </View>
   );
 };

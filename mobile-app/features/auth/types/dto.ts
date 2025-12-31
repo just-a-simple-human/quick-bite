@@ -1,6 +1,6 @@
 export interface IRegisterDto {
   email: string;
-  username: string;
+  name: string;
   password: string;
 }
 

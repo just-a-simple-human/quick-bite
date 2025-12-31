@@ -24,7 +24,7 @@ interface IProps extends TextInputProps {
 const Input = forwardRef<TextInput, IProps>(
   ({ label, BottomLink, error, ...props }, ref?) => {
     const theme = useTheme();
-    const height = useSharedValue(92);
+    const height = useSharedValue(BottomLink ? 124 : 92);
     const animatedStyle = useAnimatedStyle(() => ({
       height:
         height.value === 92 || height.value === 124

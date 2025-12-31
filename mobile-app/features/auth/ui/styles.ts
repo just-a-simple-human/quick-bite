@@ -10,11 +10,14 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
   },
+  error: { fontSize: 14 },
   submitButton: {
     width: "100%",
     paddingVertical: 16,
     alignItems: "center",
     borderRadius: 16,
+    position: "absolute",
+    bottom: 0,
   },
   submitButtonText: {
     fontSize: 18,

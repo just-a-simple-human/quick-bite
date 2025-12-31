@@ -7,6 +7,7 @@ import { verificationApi } from "@/features/verify";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
+import { AxiosError, isAxiosError } from "axios";
 
 function useLoginForm() {
   return useForm({
@@ -32,38 +33,47 @@ function useRegisterForm() {
   });
 }
 
-const loginSubmitHandler: SubmitHandler<InferType<typeof authSchema>> = async (
-  data
-) => {
-  try {
-    const response = await authApi.login({
-      email: data.email,
-      password: data.password,
-    });
-    await SecureStore.setItemAsync("auth_token", response.data["auth_token"]);
-    router.push("/");
-  } catch (error) {
-    console.error(error);
-  }
+const loginSubmitHandler = (onError: (error: AxiosError) => void) => {
+  const submitHandler: SubmitHandler<InferType<typeof authSchema>> = async (
+    data
+  ) => {
+    try {
+      const response = await authApi.login(
+        {
+          email: data.email,
+          password: data.password,
+        },
+        onError
+      );
+      if (!response) return;
+      await SecureStore.setItemAsync("auth_token", response.data["auth_token"]);
+      router.push("/");
+    } catch (error) {}
+  };
+  return submitHandler;
 };
 
-const registerSubmitHandler: SubmitHandler<
-  InferType<typeof registerSchema>
-> = async (data) => {
-  try {
-    await authApi.register({
-      email: data.email,
-      username: data.username,
-      password: data.password,
-    });
+const registerSubmitHandler = (onError: (error: AxiosError) => void) => {
+  const submitHandler: SubmitHandler<InferType<typeof registerSchema>> = async (
+    data
+  ) => {
+    try {
+      await authApi.register(
+        {
+          email: data.email,
+          name: data.username,
+          password: data.password,
+        },
+        onError
+      );
 
-    await AsyncStorage.setItem("account-email", data.email);
+      await AsyncStorage.setItem("account-email", data.email);
 
-    await verificationApi.sendCode(data.email);
-    router.push("/verification");
-  } catch (e) {
-    console.error(e);
-  }
+      await verificationApi.sendCode(data.email);
+      router.push("/verification");
+    } catch (e) {}
+  };
+  return submitHandler;
 };
 
 export {
