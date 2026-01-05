@@ -81,6 +81,7 @@ permissionProvider
     Resource.Category,
     Resource.Order,
   )
+  .updateAny(Resource.Category)
   .grant(Role.Customer)
   .readOwn(Resource.CustomerProfile, Resource.Order)
   .createOwn(Resource.CustomerProfile, Resource.Order);

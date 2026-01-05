@@ -14,7 +14,7 @@ import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 import { UseAuth } from 'src/auth/decorators/auth.decorator';
 import { Action, Resource } from 'src/auth/types/permission.type';
 
-@Controller('menu-item')
+@Controller('menu')
 export class MenuItemController {
   constructor(private readonly menuItemService: MenuItemService) {}
 
@@ -34,11 +34,8 @@ export class MenuItemController {
     resource: Resource.MenuItem,
     possession: 'any',
   })
-  findAll(
-    @Query('page') page?: number,
-    @Query('itemsPerPage') itemsPerPage?: number,
-  ) {
-    return this.menuItemService.findAll(page, itemsPerPage);
+  findAll(@Query('limit') limit?: number, @Query('offset') offset?: number) {
+    return this.menuItemService.getMenu(limit, offset);
   }
 
   @Get(':id')

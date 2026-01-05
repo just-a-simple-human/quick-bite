@@ -16,18 +16,33 @@ export class MenuItemService {
     return response;
   }
 
-  async findAll(page: number = 1, itemsPerPage: number = 5) {
-    const response = {
-      resources: await this.menuItemRepository.find({
-        relations: {
-          category: true,
-        },
-        take: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-      }),
-      count: await this.menuItemRepository.count(),
-    };
+  async findAll(
+    page: number = 1,
+    itemsPerPage: number = 5,
+    categoryId?: number,
+  ) {
+    const response = await this.menuItemRepository.find({
+      relations: {
+        category: true,
+      },
+      take: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+      where: { category: { id: categoryId } },
+    });
     return response;
+  }
+
+  async getMenu(limit: number = 10, offset: number = 0) {
+    return await this.menuItemRepository
+      .createQueryBuilder('menu')
+      .leftJoinAndSelect('menu.category', 'category')
+      .leftJoin('menu.tags', 'tag')
+      .groupBy('menu.id, category.id')
+      .orderBy('category.id')
+      .addOrderBy('menu.id')
+      .limit(limit)
+      .offset(offset)
+      .getMany();
   }
 
   async findOne(id: number) {

@@ -35,8 +35,8 @@ export class CategoryController {
     resource: Resource.Category,
     possession: 'any',
   })
-  findAll(@Query('limit') limit: number) {
-    return this.categoryService.findAll(limit);
+  findAll() {
+    return this.categoryService.findAll();
   }
 
   @Get(':id')

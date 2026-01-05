@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MenuItemModule } from './menu-item/menu-item.module';
@@ -13,6 +11,8 @@ import { TagModule } from './tag/tag.module';
 import { EmailModule } from './email/email.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { VerificationModule } from './verification/verification.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -48,6 +48,7 @@ import { VerificationModule } from './verification/verification.module';
         },
       }),
     }),
+    ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'public') }),
     MenuItemModule,
     CategoryModule,
     CustomerModule,
@@ -58,7 +59,5 @@ import { VerificationModule } from './verification/verification.module';
     EmailModule,
     VerificationModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

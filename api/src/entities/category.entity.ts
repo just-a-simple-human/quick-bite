@@ -7,6 +7,8 @@ export class Category {
   id: number;
   @Column()
   name: string;
+  @Column({ unique: true })
+  slug: string;
   @OneToMany(() => MenuItem, (menuItem) => menuItem.category)
   menuItems: MenuItem[];
 }

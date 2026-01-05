@@ -2,6 +2,8 @@ import { Category } from 'src/entities/category.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -15,13 +17,23 @@ export class MenuItem {
   id: number;
   @Column()
   name: string;
+  @Column({ unique: true })
+  slug: string;
   @Column()
-  thumbnail: string;
+  description: string;
   @Column({ type: 'numeric' })
   price: number;
+  @Column({ name: 'image', nullable: true })
+  image: string;
   @ManyToOne(() => Category, (category) => category.menuItems)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
   @ManyToMany(() => Tag, (tag) => tag.menuItems)
+  @JoinTable({
+    name: 'menu_item_tags',
+    joinColumn: { name: 'menu_item_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
+  })
   tags: Tag[];
   @ManyToMany(() => Order)
   orders: Order[];
