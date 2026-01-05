@@ -24,10 +24,11 @@ export class CategoryService {
     return response;
   }
 
-  async findAll(limit?: number) {
+  async findAll() {
     const response = await this.categoryRepositry.find({
-      take: limit,
-      relations: { menuItems: true },
+      order: {
+        id: 'ASC',
+      },
     });
     return response;
   }
