@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import React from "react";
-
 import { TabBar, CartIcon, MenuBookIcon, LocationIcon } from "@/widgets/tabs";
 import { useColorScheme } from "react-native";
 

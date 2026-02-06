@@ -1,15 +1,20 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { OtpInput, OtpInputRef } from "react-native-otp-entry";
 import { ThemedText } from "@/shared/ui/themed";
 import { styles } from "./styles";
 import { useTheme } from "@react-navigation/native";
-import { verify } from "../model/form";
+import { sendCode, verify } from "../model/use-verification-form";
 
 const VerificationForm = () => {
   const theme = useTheme();
   const inputRef = useRef<OtpInputRef>(null);
   const [code, setCode] = useState<string>("");
+
+  useEffect(() => {
+    sendCode();
+  });
+
   return (
     <View style={styles.form}>
       <OtpInput
@@ -27,7 +32,11 @@ const VerificationForm = () => {
       />
       <View style={styles.resendContainer}>
         <ThemedText style={styles.text}>I didn’t receive a code </ThemedText>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            sendCode();
+          }}
+        >
           <Text style={[styles.resendLink, { color: theme.colors.primary }]}>
             Send again
           </Text>

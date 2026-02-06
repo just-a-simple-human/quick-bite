@@ -1,13 +1,13 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
 import { Input } from "@/shared/ui/input/input";
-import { styles } from "./styles";
-import { useTheme } from "@react-navigation/native";
 import { ThemedText } from "@/shared/ui/themed";
+import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
-import { loginSubmitHandler, useLoginForm } from "../model/form";
+import React from "react";
 import { Controller } from "react-hook-form";
-import { serverErrorHandler } from "@/shared/utils/server-error-handler";
+import { View } from "react-native";
+import { useLoginForm } from "../model/use-auth-form";
+import { useLoginMutation } from "../model/use-auth-mutation";
+import { styles } from "./styles";
 import { SubmitButton } from "./submit-button";
 
 const SignInForm = () => {
@@ -15,41 +15,39 @@ const SignInForm = () => {
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isValid, isDirty, isSubmitted },
     setError,
-    clearErrors,
     handleSubmit,
   } = useLoginForm();
+
+  const mutation = useLoginMutation(setError);
 
   return (
     <View style={styles.form}>
       <Controller
         name="email"
         control={control}
-        render={({
-          field: { value, onChange, name },
-          fieldState: { error },
-        }) => (
+        render={({ field, fieldState }) => (
           <Input
             label="Email"
             placeholder="Enter your email"
             keyboardType="email-address"
             textContentType="emailAddress"
             autoComplete="email"
-            value={value}
-            onChangeText={onChange}
-            name={name}
-            error={error}
+            value={field.value}
+            onChangeText={field.onChange}
+            name={field.name}
+            error={fieldState.error}
           />
         )}
       />
       <Controller
         name="password"
         control={control}
-        render={({ field: { onChange, name, ref }, fieldState: { error } }) => (
+        render={({ field, fieldState }) => (
           <Input
-            ref={ref}
-            onChangeText={onChange}
+            ref={field.ref}
+            onChangeText={field.onChange}
             label="Password"
             placeholder="Enter your password"
             textContentType="password"
@@ -68,8 +66,8 @@ const SignInForm = () => {
                 </Link>
               </ThemedText>
             )}
-            name={name}
-            error={error}
+            name={field.name}
+            error={fieldState.error}
           />
         )}
       />
@@ -78,12 +76,12 @@ const SignInForm = () => {
         errors={errors}
         buttonText="Sign In"
         onPress={(e) =>
-          handleSubmit(
-            loginSubmitHandler((error) =>
-              serverErrorHandler<typeof errors>(error, setError, clearErrors)
-            )
-          )(e)
+          handleSubmit((data) => {
+            mutation.mutate(data);
+          })(e)
         }
+        isLoading={mutation.isPending}
+        disabled={!isValid && !errors.root && (isDirty || isSubmitted)}
       />
     </View>
   );

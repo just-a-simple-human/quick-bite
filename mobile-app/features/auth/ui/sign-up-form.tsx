@@ -1,49 +1,40 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
-import { Input } from "@/shared/ui/input/input";
-import { styles } from "./styles";
-import { useTheme } from "@react-navigation/native";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { Input } from "@/shared/ui/input/input";
 import { ThemedText } from "@/shared/ui/themed";
-import { registerSubmitHandler, useRegisterForm } from "../model/form";
+import React from "react";
 import { Controller } from "react-hook-form";
-import { serverErrorHandler } from "@/shared/utils/server-error-handler";
-import {
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withSpring,
-} from "react-native-reanimated";
+import { View } from "react-native";
+import { useRegisterForm } from "../model/use-auth-form";
+import { useRegisterMutation } from "../model/use-auth-mutation";
+import { styles } from "./styles";
 import { SubmitButton } from "./submit-button";
 
 const SignUpForm = () => {
   const {
     control,
     setError,
-    clearErrors,
-    formState: { errors },
+    formState: { errors, isValid, isDirty, isSubmitted },
     handleSubmit,
   } = useRegisterForm();
+
+  const mutation = useRegisterMutation(setError);
 
   return (
     <View style={styles.form}>
       <Controller
         name="email"
         control={control}
-        render={({
-          field: { value, onChange, name },
-          fieldState: { error },
-        }) => (
+        render={({ field, fieldState }) => (
           <Input
             label="Email"
             placeholder="Enter your email"
             keyboardType="email-address"
             textContentType="emailAddress"
             autoComplete="email"
-            value={value}
-            onChangeText={onChange}
-            name={name}
-            error={error}
+            value={field.value}
+            onChangeText={field.onChange}
+            name={field.name}
+            error={fieldState.error}
           />
         )}
       />
@@ -51,19 +42,16 @@ const SignUpForm = () => {
       <Controller
         name="username"
         control={control}
-        render={({
-          field: { value, onChange, name },
-          fieldState: { error },
-        }) => (
+        render={({ field, fieldState }) => (
           <Input
             label="Username"
             placeholder="Enter your username"
             textContentType="username"
             autoComplete="username-new"
-            value={value}
-            onChangeText={onChange}
-            name={name}
-            error={error}
+            value={field.value}
+            onChangeText={field.onChange}
+            name={field.name}
+            error={fieldState.error}
           />
         )}
       />
@@ -71,16 +59,17 @@ const SignUpForm = () => {
       <Controller
         name="password"
         control={control}
-        render={({ field: { onChange, name }, fieldState: { error } }) => (
+        render={({ field, fieldState }) => (
           <Input
             label="Password"
             placeholder="Enter your password"
             secureTextEntry
             autoComplete="new-password"
-            textContentType="oneTimeCode"
-            onChangeText={(text) => onChange(text)}
-            name={name}
-            error={error}
+            textContentType="newPassword"
+            ref={field.ref}
+            onChangeText={(text) => field.onChange(text)}
+            name={field.name}
+            error={fieldState.error}
             inputMode="text"
           />
         )}
@@ -90,10 +79,10 @@ const SignUpForm = () => {
         <Controller
           name="termsAndConditions"
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field }) => (
             <Checkbox
-              isChecked={value}
-              toggleIsChecked={() => onChange(!value)}
+              isChecked={field.value}
+              toggleIsChecked={() => field.onChange(!field.value)}
             />
           )}
         />
@@ -104,12 +93,12 @@ const SignUpForm = () => {
         errors={errors}
         buttonText="Sign Up"
         onPress={(e) =>
-          handleSubmit(
-            registerSubmitHandler((error) =>
-              serverErrorHandler<typeof errors>(error, setError, clearErrors)
-            )
-          )(e)
+          handleSubmit((data) => {
+            mutation.mutate(data);
+          })(e)
         }
+        isLoading={mutation.isPending}
+        disabled={!isValid && !errors.root && (isDirty || isSubmitted)}
       />
     </View>
   );

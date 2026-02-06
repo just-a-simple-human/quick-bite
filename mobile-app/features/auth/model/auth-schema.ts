@@ -15,9 +15,9 @@ const registerSchema = authSchema.concat(
       .test(
         "termsAndConditions",
         "Please confirm your acceptance of the terms and conditions",
-        (value) => value
+        (value) => value,
       ),
-  })
+  }),
 );
 
 export { authSchema, registerSchema };

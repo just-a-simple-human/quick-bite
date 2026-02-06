@@ -14,10 +14,15 @@ export const styles = StyleSheet.create({
   submitButton: {
     width: "100%",
     paddingVertical: 16,
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
+    gap: 8,
     borderRadius: 16,
     position: "absolute",
     bottom: 0,
+    transitionProperty: "background",
+    transitionDuration: "0.3s",
   },
   submitButtonText: {
     fontSize: 18,

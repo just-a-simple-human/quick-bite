@@ -1,4 +1,4 @@
-import { GestureResponderEvent, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import Animated, {
   FadeInUp,
@@ -11,14 +11,23 @@ import Animated, {
 import { styles } from "./styles";
 import { FieldErrors } from "react-hook-form";
 import { useTheme } from "@react-navigation/native";
+import { DarkAppTheme } from "@/shared/consts/colors";
 
 interface IProps {
   errors: FieldErrors;
   onPress: (e: any) => void | Promise<void>;
   buttonText: string;
+  isLoading: boolean;
+  disabled?: boolean;
 }
 
-const SubmitButton = ({ errors, onPress, buttonText }: IProps) => {
+const SubmitButton = ({
+  errors,
+  onPress,
+  buttonText,
+  isLoading,
+  disabled = false,
+}: IProps) => {
   const theme = useTheme();
   const height = useSharedValue(56);
   const animatedStyle = useAnimatedStyle(() => ({
@@ -30,7 +39,7 @@ const SubmitButton = ({ errors, onPress, buttonText }: IProps) => {
 
   useEffect(() => {
     height.value = errors.root ? 84 : 56;
-  }, [errors.root]);
+  }, [errors.root, height]);
 
   return (
     <Animated.View style={animatedStyle}>
@@ -44,10 +53,19 @@ const SubmitButton = ({ errors, onPress, buttonText }: IProps) => {
         </Animated.Text>
       )}
       <TouchableOpacity
-        style={[styles.submitButton, { backgroundColor: theme.colors.primary }]}
+        style={[
+          styles.submitButton,
+          {
+            backgroundColor: disabled
+              ? theme.colors.border
+              : theme.colors.primary,
+          },
+        ]}
         onPress={(e) => onPress(e.nativeEvent)}
+        disabled={disabled || isLoading}
       >
         <Text style={styles.submitButtonText}>{buttonText}</Text>
+        {isLoading && <ActivityIndicator color={DarkAppTheme.colors.text} />}
       </TouchableOpacity>
     </Animated.View>
   );
