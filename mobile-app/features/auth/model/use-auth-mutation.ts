@@ -16,7 +16,6 @@ export function useLoginMutation(setError: any) {
     },
     onSuccess: (data) => {
       SecureStore.setItem("auth_token", data.data.auth_token);
-      AsyncStorage.setItem("email", data.data.email);
       router.replace("/(tabs)");
     },
   });
@@ -35,8 +34,10 @@ export function useRegisterMutation(setError: any) {
     },
     onSuccess: (data) => {
       SecureStore.setItem("auth_token", data.data.auth_token);
-      AsyncStorage.setItem("account_email", data.data.email);
-      router.push("/verification");
+      router.push({
+        pathname: "/verification",
+        params: { email: data.data.email },
+      });
     },
   });
 }

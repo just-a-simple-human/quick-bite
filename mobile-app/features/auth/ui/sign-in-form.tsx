@@ -8,7 +8,7 @@ import { View } from "react-native";
 import { useLoginForm } from "../model/use-auth-form";
 import { useLoginMutation } from "../model/use-auth-mutation";
 import { styles } from "./styles";
-import { SubmitButton } from "./submit-button";
+import { SubmitButton } from "../../../shared/ui/submit-button";
 
 const SignInForm = () => {
   const theme = useTheme();
@@ -73,7 +73,7 @@ const SignInForm = () => {
       />
 
       <SubmitButton
-        errors={errors}
+        error={errors.root?.message}
         buttonText="Sign In"
         onPress={(e) =>
           handleSubmit((data) => {

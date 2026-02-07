@@ -7,7 +7,7 @@ import { View } from "react-native";
 import { useRegisterForm } from "../model/use-auth-form";
 import { useRegisterMutation } from "../model/use-auth-mutation";
 import { styles } from "./styles";
-import { SubmitButton } from "./submit-button";
+import { SubmitButton } from "../../../shared/ui/submit-button";
 
 const SignUpForm = () => {
   const {
@@ -90,7 +90,7 @@ const SignUpForm = () => {
       </View>
 
       <SubmitButton
-        errors={errors}
+        error={errors.root?.message}
         buttonText="Sign Up"
         onPress={(e) =>
           handleSubmit((data) => {

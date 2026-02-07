@@ -1,4 +1,9 @@
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect } from "react";
 import Animated, {
   FadeInUp,
@@ -8,13 +13,11 @@ import Animated, {
   withDelay,
   withSpring,
 } from "react-native-reanimated";
-import { styles } from "./styles";
-import { FieldErrors } from "react-hook-form";
 import { useTheme } from "@react-navigation/native";
 import { DarkAppTheme } from "@/shared/consts/colors";
 
 interface IProps {
-  errors: FieldErrors;
+  error?: string;
   onPress: (e: any) => void | Promise<void>;
   buttonText: string;
   isLoading: boolean;
@@ -22,7 +25,7 @@ interface IProps {
 }
 
 const SubmitButton = ({
-  errors,
+  error,
   onPress,
   buttonText,
   isLoading,
@@ -38,18 +41,18 @@ const SubmitButton = ({
   }));
 
   useEffect(() => {
-    height.value = errors.root ? 84 : 56;
-  }, [errors.root, height]);
+    height.value = error ? 84 : 56;
+  }, [error, height]);
 
   return (
     <Animated.View style={animatedStyle}>
-      {errors.root && (
+      {error && (
         <Animated.Text
           entering={FadeInUp.duration(250).delay(250)}
           exiting={FadeOutUp.duration(250)}
-          style={[styles.error, { color: theme.colors.notification }]}
+          style={{ fontSize: 14, color: theme.colors.notification }}
         >
-          {errors.root.message}
+          {error}
         </Animated.Text>
       )}
       <TouchableOpacity
@@ -72,3 +75,24 @@ const SubmitButton = ({
 };
 
 export { SubmitButton };
+
+const styles = StyleSheet.create({
+  submitButton: {
+    width: "100%",
+    paddingVertical: 16,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    borderRadius: 16,
+    position: "absolute",
+    bottom: 0,
+    transitionProperty: "background",
+    transitionDuration: "0.3s",
+  },
+  submitButtonText: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: DarkAppTheme.colors.text,
+  },
+});

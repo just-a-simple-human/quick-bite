@@ -4,15 +4,45 @@ import { OtpInput, OtpInputRef } from "react-native-otp-entry";
 import { ThemedText } from "@/shared/ui/themed";
 import { styles } from "./styles";
 import { useTheme } from "@react-navigation/native";
-import { sendCode, verify } from "../model/use-verification-form";
+import {
+  useSendCodeMutation,
+  useVerifyMutation,
+} from "../model/use-verification-mutation";
+import { SubmitButton } from "@/shared/ui/submit-button";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
 
 const VerificationForm = () => {
   const theme = useTheme();
+  const params = useLocalSearchParams();
+  const email = params.email as string;
+
   const inputRef = useRef<OtpInputRef>(null);
   const [code, setCode] = useState<string>("");
+  const [isInitialSend, setIsInitialSend] = useState<boolean>(true);
+  const [resendTimer, setResendTimer] = useState<number>(60);
+  const [error, setError] = useState<string>();
+
+  const verifyMutation = useVerifyMutation((err: string) => {
+    setError(err);
+  });
+
+  const sendCodeMutation = useSendCodeMutation(setError, () =>
+    setResendTimer(60),
+  );
 
   useEffect(() => {
-    sendCode();
+    if (isInitialSend) {
+      sendCodeMutation.mutate(email);
+      setIsInitialSend(false);
+    }
+  }, [email, isInitialSend, sendCodeMutation]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setResendTimer((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(id);
   });
 
   return (
@@ -31,23 +61,28 @@ const VerificationForm = () => {
         onTextChange={(text) => setCode(text)}
       />
       <View style={styles.resendContainer}>
-        <ThemedText style={styles.text}>I didn’t receive a code </ThemedText>
-        <TouchableOpacity
-          onPress={() => {
-            sendCode();
-          }}
-        >
-          <Text style={[styles.resendLink, { color: theme.colors.primary }]}>
-            Send again
-          </Text>
-        </TouchableOpacity>
+        <ThemedText style={styles.text}>Haven&apos;t received code?</ThemedText>
+        {resendTimer <= 0 ? (
+          <TouchableOpacity
+            onPress={() => {
+              sendCodeMutation.mutate(email);
+            }}
+          >
+            <Text style={[styles.resendLink, { color: theme.colors.primary }]}>
+              Send again
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text>Send again in {resendTimer} seconds</Text>
+        )}
       </View>
-      <TouchableOpacity
-        style={[styles.submitButton, { backgroundColor: theme.colors.primary }]}
-        onPress={() => verify(code)}
-      >
-        <Text style={styles.submitButtonText}>Verify</Text>
-      </TouchableOpacity>
+      <SubmitButton
+        buttonText="Verify"
+        error={error}
+        onPress={() => verifyMutation.mutate({ email, code })}
+        isLoading={verifyMutation.isPending}
+        disabled={code.length < 6}
+      />
     </View>
   );
 };
