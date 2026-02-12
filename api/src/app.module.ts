@@ -13,6 +13,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { VerificationModule } from './verification/verification.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-store';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -29,6 +32,31 @@ import { join } from 'path';
         database: configService.get('DATABASE_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
+        logging: ['query'],
+        cache: {
+          type: 'ioredis',
+          alwaysEnabled: true,
+          duration: 300000,
+          options: {
+            socket: {
+              host: configService.get<string>('REDIS_HOST'),
+              port: configService.get<number>('REDIS_PORT'),
+            },
+          },
+        },
+      }),
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      isGlobal: true,
+      useFactory: async (configService: ConfigService) => ({
+        store: await redisStore({
+          socket: {
+            host: configService.get<string>('REDIS_HOST'),
+            port: configService.get<number>('REDIS_PORT'),
+          },
+        }),
       }),
     }),
     MailerModule.forRootAsync({
@@ -46,6 +74,15 @@ import { join } from 'path';
             pass: configeService.get('GOOGLE_PASSWORD'),
           },
         },
+      }),
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      global: true,
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: { expiresIn: '24h' },
       }),
     }),
     ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'public') }),

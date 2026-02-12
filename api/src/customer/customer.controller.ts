@@ -1,23 +1,8 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Request,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { CustomerService } from './customer.service';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { OrderService } from 'src/order/order.service';
-import { CheckAuthInterceptor } from 'src/auth/interseptors/check-author.interceptor';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { permissionProvider } from 'src/auth/permission.provider';
-import { Action, Resource, Role } from 'src/auth/types/permission.type';
+import { Action, Resource } from 'src/auth/types/permission.type';
 import { UseAuth } from 'src/auth/decorators/auth.decorator';
 import { Customer } from 'src/entities/customer.entity';
 
