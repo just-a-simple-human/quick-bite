@@ -28,6 +28,7 @@ export class MenuItemService {
       take: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
       where: { category: { id: categoryId } },
+      cache: 600000,
     });
     return response;
   }

@@ -7,14 +7,29 @@ export class VerificationController {
 
   @Post('send-code')
   sendCustomerVerificationCode(@Body() { email }: { email: string }) {
-    const response =
-      this.verificationService.sendCustomerVerificationCode(email);
+    const response = this.verificationService.sendCustomerOtp(email);
     return response;
   }
 
-  @Post()
-  verifyCustomer(@Body() { email, code }: { email: string; code: string }) {
-    const response = this.verificationService.verifyCustomer(email, code);
+  @Post('registration')
+  verifyCustomerRegistration(
+    @Body() { email, code }: { email: string; code: string },
+  ) {
+    const response = this.verificationService.verifyCustomerRegistration(
+      email,
+      code,
+    );
+    return response;
+  }
+
+  @Post('reset-password')
+  verifyCustomerResetPassword(
+    @Body() { email, code }: { email: string; code: string },
+  ) {
+    const response = this.verificationService.verifyCustomerResetPassword(
+      email,
+      code,
+    );
     return response;
   }
 }

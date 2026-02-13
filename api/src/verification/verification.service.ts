@@ -1,58 +1,105 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Verification } from 'src/entities/verification.entity';
-import { Repository } from 'typeorm';
 import { randomInt } from 'crypto';
 import { hash, verify } from 'argon2';
 import { CustomerService } from 'src/customer/customer.service';
 import { EmailService } from 'src/email/email.service';
 import { renderFile } from 'pug';
-import { constrainedMemory } from 'process';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class VerificationService {
   constructor(
-    @InjectRepository(Verification)
-    private readonly verificationRepository: Repository<Verification>,
+    @Inject(CACHE_MANAGER)
+    private readonly redis: Cache,
     private readonly customerService: CustomerService,
     private readonly emailService: EmailService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async sendCustomerVerificationCode(email: string) {
-    const customer = await this.customerService.findOneByEmail(email);
-    if (!customer) throw new NotFoundException('Customer not found');
+  async sendCustomerOtp(email: string) {
+    const attemptsId = `otp:customer:${email}:attempts`;
+    const codeId = `otp:customer:${email}`;
 
     const code = randomInt(100000, 1000000).toString();
     const hashedCode = await hash(code);
-    this.verificationRepository.save({
-      customer,
-      code: hashedCode,
-      verified: false,
-    });
-    this.emailService.sendEmail(
-      customer.email,
-      renderFile('./src/mail-templates/verification.pug', {
-        customer,
-        code,
-      }),
-    );
-  }
-  async verifyCustomer(email: string, code: string) {
+
+    await Promise.all([
+      this.redis.set(codeId, hashedCode, 300000),
+      this.redis.set(attemptsId, 0, 3600000),
+    ]);
+
     const customer = await this.customerService.findOneByEmail(email);
-    if (!customer || !customer.verification) throw new NotFoundException();
 
-    if (customer.verification.verified)
-      throw new BadRequestException('Account already verified');
+    if (customer) {
+      this.emailService.sendEmail(
+        customer.email,
+        renderFile('./src/mail-templates/verification.pug', {
+          customer,
+          code,
+        }),
+      );
+    }
+  }
 
-    const isMatching = verify(customer.verification.code, code);
-    if (!isMatching) throw new BadRequestException('Wrong OTP');
+  async verifyCustomerOtp(email: string, code: string) {
+    const attemptsId = `otp:customer:${email}:attempts`;
+    const codeId = `otp:customer:${email}`;
 
-    return this.verificationRepository.update(customer.verification.id, {
-      verified: true,
-    });
+    const [hashedCode, attempts = 0] = await Promise.all([
+      this.redis.get<string>(codeId),
+      this.redis.get<number>(attemptsId),
+    ]);
+
+    if (attempts > 5) {
+      throw new BadRequestException('Too many attempts. Please, try later');
+    }
+
+    if (!hashedCode) {
+      throw new BadRequestException('No otp sent!');
+    }
+
+    const isMatching = await verify(hashedCode, code);
+    if (isMatching) {
+      await Promise.all([this.redis.del(codeId), this.redis.del(attemptsId)]);
+    } else {
+      await this.redis.set(attemptsId, attempts + 1, 300000);
+    }
+    return isMatching;
+  }
+
+  async verifyCustomerRegistration(email: string, code: string) {
+    const customer = await this.customerService.findOneByEmail(email);
+    if (!customer) {
+      throw new NotFoundException('Customer not found');
+    }
+
+    const verified = await this.verifyCustomerOtp(email, code);
+    if (!verified) {
+      throw new UnprocessableEntityException('Wrong OTP. Please, try again');
+    }
+
+    await this.customerService.update(customer.id, { verifiedAt: new Date() });
+    return { message: 'Customer verfied' };
+  }
+
+  async verifyCustomerResetPassword(email: string, code: string) {
+    const verified = await this.verifyCustomerOtp(email, code);
+
+    if (!verified) {
+      throw new UnprocessableEntityException('Wrong OTP. Please, try again');
+    }
+
+    const token = this.jwtService.sign({ email }, { expiresIn: '1h' });
+    const resetTokenId = `reset-password:customer:${email}`;
+    await this.redis.set(resetTokenId, token, 3600000);
+
+    return { reset_token: token };
   }
 }

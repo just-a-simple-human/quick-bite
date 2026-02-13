@@ -1,14 +1,9 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from 'src/entities/customer.entity';
 import { Repository } from 'typeorm';
-import { hash } from 'argon2';
 
 @Injectable()
 export class CustomerService {
@@ -30,7 +25,6 @@ export class CustomerService {
   async findOneByEmail(email: string) {
     const response = await this.customerRepository.findOne({
       where: { email },
-      relations: { verification: true },
     });
     return response;
   }
@@ -46,7 +40,11 @@ export class CustomerService {
   }
 
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+    const response = await this.customerRepository.update(
+      id,
+      updateCustomerDto,
+    );
+    return response;
   }
 
   async remove(id: number) {

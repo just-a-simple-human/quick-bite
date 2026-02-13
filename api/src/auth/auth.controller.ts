@@ -6,6 +6,7 @@ import { CreateEmployeeDto } from 'src/employee/dto/create-employee.dto';
 import { IPayload } from './types/payload.type';
 import { LocalCustomerGuard } from './guards/local-customer.guard';
 import { LocalEmployeeGuard } from './guards/local-employee.guard';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -17,9 +18,15 @@ export class AuthController {
     return response;
   }
 
+  @Post('customer/reset-password')
+  async resetCustomerPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    const response = this.authService.resetCustomerPassword(resetPasswordDto);
+    return response;
+  }
+
   @Post('customer/login')
   @UseGuards(LocalCustomerGuard)
-  async loginCustomer(@Body() payload: IPayload) {
+  loginCustomer(@Body() payload: IPayload) {
     const response = this.authService.loginCustomer(payload);
     return response;
   }
@@ -32,7 +39,7 @@ export class AuthController {
 
   @Post('employee/login')
   @UseGuards(LocalEmployeeGuard)
-  async loginEmployee(@Body() payload: IPayload) {
+  loginEmployee(@Body() payload: IPayload) {
     const response = this.authService.loginEmployee(payload);
     return response;
   }

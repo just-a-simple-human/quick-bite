@@ -1,8 +1,9 @@
 import {
   ConflictException,
+  ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
@@ -12,10 +13,14 @@ import { IPayload } from './types/payload.type';
 import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
 import { CreateEmployeeDto } from 'src/employee/dto/create-employee.dto';
 import { Role } from './types/permission.type';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject(CACHE_MANAGER)
+    private readonly redis: Cache,
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private jwtService: JwtService,
@@ -25,7 +30,7 @@ export class AuthService {
     const alreadyExists = await this.customerService.findOneByEmail(
       createCustomerDto.email,
     );
-    if (!!alreadyExists) {
+    if (alreadyExists) {
       throw new ConflictException({
         email: 'User with such email already exists',
       });
@@ -38,8 +43,8 @@ export class AuthService {
     return {
       ...response,
       auth_token: this.jwtService.sign({
-        id: createCustomerDto.id,
-        email: createCustomerDto.email,
+        id: customer.id,
+        email: customer.email,
         role: Role.Customer,
       }),
     };
@@ -86,15 +91,15 @@ export class AuthService {
     return null;
   }
 
-  async login(payload: IPayload, role: Role) {
+  login(payload: IPayload, role: Role) {
     return {
       ...payload,
       auth_token: this.jwtService.sign({ ...payload, role: role }),
     };
   }
 
-  async loginCustomer(payload: IPayload) {
-    const response = await this.login(
+  loginCustomer(payload: IPayload) {
+    const response = this.login(
       {
         email: payload.email,
       },
@@ -102,8 +107,32 @@ export class AuthService {
     );
     return response;
   }
-  async loginEmployee(payload: IPayload) {
+
+  loginEmployee(payload: IPayload) {
     const response = this.login({ email: payload.email }, Role.Admin);
     return response;
+  }
+
+  async resetCustomerPassword({ reset_token, newPassword }: ResetPasswordDto) {
+    const { email } = this.jwtService.verify<{ email: string }>(reset_token);
+
+    console.log(email);
+
+    const resetTokenId = `reset-password:customer:${email}`;
+    const cachedToken = await this.redis.get<string>(resetTokenId);
+
+    if (!cachedToken || cachedToken !== reset_token) {
+      throw new ForbiddenException();
+    }
+
+    const customer = await this.customerService.findOneByEmail(email);
+    if (!customer) {
+      throw new NotFoundException('Customer not found');
+    }
+
+    await this.customerService.update(customer.id, {
+      password: await hash(newPassword),
+    });
+    return this.loginCustomer({ email: customer.email });
   }
 }
