@@ -4,7 +4,6 @@ import { AxiosResponse, AxiosError } from "axios";
 import { authApi } from "../api/auth-api";
 import { IAuthResponse, ILoginDto, IRegisterDto } from "./auth-dto";
 import * as SecureStore from "expo-secure-store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 export function useLoginMutation(setError: any) {
@@ -35,7 +34,7 @@ export function useRegisterMutation(setError: any) {
     onSuccess: (data) => {
       SecureStore.setItem("auth_token", data.data.auth_token);
       router.push({
-        pathname: "/verification",
+        pathname: "/verification/registration",
         params: { email: data.data.email },
       });
     },

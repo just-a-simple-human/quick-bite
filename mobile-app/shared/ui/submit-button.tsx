@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     position: "absolute",
     bottom: 0,
-    transitionProperty: "background",
+    transitionProperty: "backgroundColor",
     transitionDuration: "0.3s",
   },
   submitButtonText: {

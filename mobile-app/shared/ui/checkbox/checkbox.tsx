@@ -1,8 +1,7 @@
-import { View, Text, Pressable } from "react-native";
-import React from "react";
-import { Image } from "expo-image";
-import { styles } from "./styles";
 import { useTheme } from "@react-navigation/native";
+import { Image } from "expo-image";
+import React from "react";
+import { Pressable, StyleSheet } from "react-native";
 
 interface IProps {
   isChecked: boolean;
@@ -35,5 +34,20 @@ const Checkbox = ({ isChecked, toggleIsChecked }: IProps) => {
     </Pressable>
   );
 };
+
+export const styles = StyleSheet.create({
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+  },
+});
 
 export { Checkbox };

@@ -1,4 +1,5 @@
-import { Input } from "@/shared/ui/input/input";
+import { Input } from "@/shared/ui/input";
+import { SubmitButton } from "@/shared/ui/submit-button";
 import { ThemedText } from "@/shared/ui/themed";
 import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
@@ -8,7 +9,6 @@ import { View } from "react-native";
 import { useLoginForm } from "../model/use-auth-form";
 import { useLoginMutation } from "../model/use-auth-mutation";
 import { styles } from "./styles";
-import { SubmitButton } from "../../../shared/ui/submit-button";
 
 const SignInForm = () => {
   const theme = useTheme();

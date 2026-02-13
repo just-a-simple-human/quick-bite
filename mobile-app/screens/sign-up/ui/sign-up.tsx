@@ -1,13 +1,10 @@
+import { SignUpForm } from "@/features/auth";
+import { ThemedText } from "@/shared/ui/themed";
 import { useTheme } from "@react-navigation/native";
+import { Link } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
-import { ThemedText } from "@/shared/ui/themed";
-import { Input } from "@/shared/ui/input/input";
-import { TouchableOpacity } from "react-native";
-import { Text } from "react-native";
-import { SignUpForm } from "@/features/auth";
-import { Link } from "expo-router";
 
 const SignUp = () => {
   const theme = useTheme();

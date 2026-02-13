@@ -1,5 +1,5 @@
 import { Checkbox } from "@/shared/ui/checkbox";
-import { Input } from "@/shared/ui/input/input";
+import { Input } from "@/shared/ui/input";
 import { ThemedText } from "@/shared/ui/themed";
 import React from "react";
 import { Controller } from "react-hook-form";
@@ -7,7 +7,7 @@ import { View } from "react-native";
 import { useRegisterForm } from "../model/use-auth-form";
 import { useRegisterMutation } from "../model/use-auth-mutation";
 import { styles } from "./styles";
-import { SubmitButton } from "../../../shared/ui/submit-button";
+import { SubmitButton } from "@/shared/ui/submit-button";
 
 const SignUpForm = () => {
   const {

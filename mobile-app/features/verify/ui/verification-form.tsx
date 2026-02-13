@@ -1,55 +1,39 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { SubmitButton } from "@/shared/ui/submit-button";
+import { useTheme } from "@react-navigation/native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { styles } from "./styles";
 import { OtpInput, OtpInputRef } from "react-native-otp-entry";
 import { ThemedText } from "@/shared/ui/themed";
-import { styles } from "./styles";
-import { useTheme } from "@react-navigation/native";
-import {
-  useSendCodeMutation,
-  useVerifyMutation,
-} from "../model/use-verification-mutation";
-import { SubmitButton } from "@/shared/ui/submit-button";
-import { useQueryClient } from "@tanstack/react-query";
-import { useLocalSearchParams } from "expo-router";
+import React, { Ref } from "react";
 
-const VerificationForm = () => {
+interface IVerificationFormProps {
+  ref: Ref<OtpInputRef>;
+  error?: string;
+  resendTimer: number;
+  isLoading: boolean;
+  disabled: boolean;
+  onSubmit: () => void;
+  onChange: (text: string) => void;
+  resendCode: () => void;
+}
+
+const VerificationForm = ({
+  ref,
+  error,
+  resendTimer,
+  isLoading,
+  disabled,
+  onChange,
+  onSubmit,
+  resendCode,
+}: IVerificationFormProps) => {
   const theme = useTheme();
-  const params = useLocalSearchParams();
-  const email = params.email as string;
-
-  const inputRef = useRef<OtpInputRef>(null);
-  const [code, setCode] = useState<string>("");
-  const [isInitialSend, setIsInitialSend] = useState<boolean>(true);
-  const [resendTimer, setResendTimer] = useState<number>(60);
-  const [error, setError] = useState<string>();
-
-  const verifyMutation = useVerifyMutation((err: string) => {
-    setError(err);
-  });
-
-  const sendCodeMutation = useSendCodeMutation(setError, () =>
-    setResendTimer(60),
-  );
-
-  useEffect(() => {
-    if (isInitialSend) {
-      sendCodeMutation.mutate(email);
-      setIsInitialSend(false);
-    }
-  }, [email, isInitialSend, sendCodeMutation]);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setResendTimer((prev) => prev - 1);
-    }, 1000);
-    return () => clearInterval(id);
-  });
 
   return (
     <View style={styles.form}>
       <OtpInput
         numberOfDigits={6}
-        ref={inputRef}
+        ref={ref}
         hideStick
         focusColor={theme.colors.primary}
         focusStickBlinkingDuration={500}
@@ -58,16 +42,12 @@ const VerificationForm = () => {
           pinCodeTextStyle: { color: theme.colors.text },
         }}
         textInputProps={{ caretHidden: true }}
-        onTextChange={(text) => setCode(text)}
+        onTextChange={onChange}
       />
       <View style={styles.resendContainer}>
         <ThemedText style={styles.text}>Haven&apos;t received code?</ThemedText>
         {resendTimer <= 0 ? (
-          <TouchableOpacity
-            onPress={() => {
-              sendCodeMutation.mutate(email);
-            }}
-          >
+          <TouchableOpacity onPress={resendCode}>
             <Text style={[styles.resendLink, { color: theme.colors.primary }]}>
               Send again
             </Text>
@@ -79,9 +59,9 @@ const VerificationForm = () => {
       <SubmitButton
         buttonText="Verify"
         error={error}
-        onPress={() => verifyMutation.mutate({ email, code })}
-        isLoading={verifyMutation.isPending}
-        disabled={code.length < 6}
+        onPress={onSubmit}
+        isLoading={isLoading}
+        disabled={disabled}
       />
     </View>
   );

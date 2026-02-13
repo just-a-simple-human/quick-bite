@@ -1,9 +1,13 @@
-import { TextInputProps, TextInput, Text } from "react-native";
-import { forwardRef, ReactNode, useEffect } from "react";
-import { ThemedText } from "../themed";
 import { useTheme } from "@react-navigation/native";
-import { styles } from "./styles";
+import { forwardRef, ReactNode, useEffect } from "react";
 import { FieldError } from "react-hook-form";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native";
 import Animated, {
   FadeInUp,
   FadeOutUp,
@@ -12,7 +16,7 @@ import Animated, {
   withDelay,
   withSpring,
 } from "react-native-reanimated";
-import { View } from "react-native";
+import { ThemedText } from "./themed";
 
 interface IProps extends TextInputProps {
   name: string;
@@ -84,6 +88,35 @@ const Input = forwardRef<TextInput, IProps>(function InputComponent(
       )}
     </Animated.View>
   );
+});
+
+export const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    backgroundColor: "transparent",
+    gap: 8,
+  },
+  header: { height: 28 },
+  label: {
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  inputField: {
+    paddingHorizontal: 16,
+    height: 56,
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    fontSize: 16,
+    fontWeight: "400",
+  },
+  errorContainer: { height: 20 },
+  error: { fontSize: 14 },
+  footer: {
+    height: 24,
+    position: "absolute",
+    bottom: 0,
+  },
 });
 
 export { Input };
