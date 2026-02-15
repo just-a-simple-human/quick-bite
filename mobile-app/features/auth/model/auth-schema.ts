@@ -1,4 +1,4 @@
-import { boolean, object, string } from "yup";
+import { boolean, object, ref, string } from "yup";
 
 const authSchema = object({
   email: string().email("Invalid email").required("This field is required"),
@@ -20,4 +20,23 @@ const registerSchema = authSchema.concat(
   }),
 );
 
-export { authSchema, registerSchema };
+const forgotPasswordSchema = object({
+  email: string().email("Invalid email").required("This field is required"),
+});
+
+const resetPasswordSchema = object({
+  password: string()
+    .min(8, "Password must contain at least 8 characters")
+    .required("This field is required"),
+  confirmPassword: string().oneOf(
+    [ref("password")],
+    "Please, confirm password",
+  ),
+});
+
+export {
+  authSchema,
+  registerSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+};

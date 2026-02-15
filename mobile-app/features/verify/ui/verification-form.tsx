@@ -1,6 +1,6 @@
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { useTheme } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { OtpInput, OtpInputRef } from "react-native-otp-entry";
 import { ThemedText } from "@/shared/ui/themed";
@@ -48,12 +48,22 @@ const VerificationForm = ({
         <ThemedText style={styles.text}>Haven&apos;t received code?</ThemedText>
         {resendTimer <= 0 ? (
           <TouchableOpacity onPress={resendCode}>
-            <Text style={[styles.resendLink, { color: theme.colors.primary }]}>
+            <ThemedText
+              style={[styles.resendLink, { color: theme.colors.primary }]}
+            >
               Send again
-            </Text>
+            </ThemedText>
           </TouchableOpacity>
         ) : (
-          <Text>Send again in {resendTimer} seconds</Text>
+          <ThemedText>
+            Send again in{" "}
+            <ThemedText
+              style={{ fontWeight: 500, color: theme.colors.primary }}
+            >
+              {resendTimer}
+            </ThemedText>{" "}
+            seconds
+          </ThemedText>
         )}
       </View>
       <SubmitButton

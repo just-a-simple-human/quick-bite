@@ -1,29 +1,58 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { authSchema, registerSchema } from "./auth-schema";
+import {
+  authSchema,
+  forgotPasswordSchema,
+  registerSchema,
+  resetPasswordSchema,
+} from "./auth-schema";
 
 function useLoginForm() {
   return useForm({
+    resolver: yupResolver(authSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-    mode: "onSubmit",
-    resolver: yupResolver(authSchema),
+    mode: "all",
   });
 }
 
 function useRegisterForm() {
   return useForm({
+    resolver: yupResolver(registerSchema),
     defaultValues: {
       email: "",
       username: "",
       password: "",
       termsAndConditions: false,
     },
-    mode: "onSubmit",
-    resolver: yupResolver(registerSchema),
+    mode: "all",
   });
 }
 
-export { useLoginForm, useRegisterForm };
+function useForgotPasswordForm() {
+  return useForm({
+    resolver: yupResolver(forgotPasswordSchema),
+    defaultValues: { email: "" },
+    mode: "all",
+  });
+}
+
+function useResetPasswordForm() {
+  return useForm({
+    resolver: yupResolver(resetPasswordSchema),
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+    mode: "all",
+  });
+}
+
+export {
+  useLoginForm,
+  useRegisterForm,
+  useForgotPasswordForm,
+  useResetPasswordForm,
+};

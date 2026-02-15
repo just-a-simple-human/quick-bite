@@ -1,5 +1,5 @@
 import { useTheme } from "@react-navigation/native";
-import { forwardRef, ReactNode, useEffect } from "react";
+import { forwardRef, useEffect } from "react";
 import { FieldError } from "react-hook-form";
 import {
   StyleSheet,
@@ -21,39 +21,28 @@ import { ThemedText } from "./themed";
 interface IProps extends TextInputProps {
   name: string;
   label: string;
-  BottomLink?: () => ReactNode;
   error?: FieldError;
 }
 
 const Input = forwardRef<TextInput, IProps>(function InputComponent(
-  { label, BottomLink, error, ...props },
+  { label, error, ...props },
   ref?,
 ) {
   const theme = useTheme();
-  const height = useSharedValue(BottomLink ? 124 : 92);
+  const height = useSharedValue(92);
   const animatedStyle = useAnimatedStyle(() => ({
     height:
-      height.value === 92 || height.value === 124
+      height.value === 92
         ? withDelay(250, withSpring(height.value, { duration: 250 }))
         : withSpring(height.value, { duration: 250 }),
   }));
 
   useEffect(() => {
-    if (BottomLink) {
-      height.value = error ? 152 : 124;
-    } else {
-      height.value = error ? 120 : 92;
-    }
-  }, [error, BottomLink, height]);
+    height.value = error ? 120 : 92;
+  }, [error, height]);
 
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        animatedStyle,
-        { paddingBottom: BottomLink ? 32 : 0 },
-      ]}
-    >
+    <Animated.View style={[styles.container, animatedStyle]}>
       <View style={styles.header}>
         <ThemedText style={styles.label}>{label}</ThemedText>
       </View>
@@ -81,11 +70,6 @@ const Input = forwardRef<TextInput, IProps>(function InputComponent(
           </Text>
         </Animated.View>
       )}
-      {BottomLink && (
-        <View style={styles.footer}>
-          <BottomLink />
-        </View>
-      )}
     </Animated.View>
   );
 });
@@ -112,11 +96,6 @@ export const styles = StyleSheet.create({
   },
   errorContainer: { height: 20 },
   error: { fontSize: 14 },
-  footer: {
-    height: 24,
-    position: "absolute",
-    bottom: 0,
-  },
 });
 
 export { Input };

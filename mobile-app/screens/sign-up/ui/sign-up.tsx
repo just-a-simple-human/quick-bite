@@ -3,27 +3,26 @@ import { ThemedText } from "@/shared/ui/themed";
 import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
+import { Heading } from "@/shared/ui/heading";
+import { FullScreen } from "@/shared/ui/full-screen";
 
 const SignUp = () => {
   const theme = useTheme();
   return (
-    <SafeAreaView
-      style={[styles.signUpScreen, { backgroundColor: theme.colors.card }]}
-    >
-      <ThemedText style={styles.title}>Create account!</ThemedText>
+    <FullScreen>
+      <Heading>Create account!</Heading>
       <SignUpForm />
       <ThemedText style={styles.bottomText}>
         Already have an account?{" "}
         <Link
           style={[styles.bottomLink, { color: theme.colors.primary }]}
-          href={"/sign-in"}
+          href={"/auth/sign-in"}
         >
           Sign In
         </Link>
       </ThemedText>
-    </SafeAreaView>
+    </FullScreen>
   );
 };
 

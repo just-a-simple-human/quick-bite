@@ -41,36 +41,37 @@ const SignInForm = () => {
           />
         )}
       />
-      <Controller
-        name="password"
-        control={control}
-        render={({ field, fieldState }) => (
-          <Input
-            ref={field.ref}
-            onChangeText={field.onChange}
-            label="Password"
-            placeholder="Enter your password"
-            textContentType="password"
-            secureTextEntry
-            BottomLink={() => (
-              <ThemedText style={styles.recoverPasswordText}>
-                Forgot your password?{" "}
-                <Link
-                  style={[
-                    styles.recoverPasswordLink,
-                    { color: theme.colors.primary },
-                  ]}
-                  href={"/recover-password"}
-                >
-                  Recover now
-                </Link>
-              </ThemedText>
-            )}
-            name={field.name}
-            error={fieldState.error}
-          />
-        )}
-      />
+
+      <View style={{ gap: 8 }}>
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              ref={field.ref}
+              onChangeText={field.onChange}
+              label="Password"
+              placeholder="Enter your password"
+              textContentType="password"
+              secureTextEntry
+              name={field.name}
+              error={fieldState.error}
+            />
+          )}
+        />
+        <ThemedText style={styles.recoverPasswordText}>
+          Forgot your password?{" "}
+          <Link
+            style={[
+              styles.recoverPasswordLink,
+              { color: theme.colors.primary },
+            ]}
+            href={"/auth/forgot-password"}
+          >
+            Recover now
+          </Link>
+        </ThemedText>
+      </View>
 
       <SubmitButton
         error={errors.root?.message}

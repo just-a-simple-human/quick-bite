@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useVerificationForm } from "../model/use-verification-form";
 import {
   useSendCodeMutation,
@@ -9,9 +9,13 @@ import { VerificationForm } from "./verification-form";
 const ResetPasswordVerificationForm = () => {
   const state = useVerificationForm();
   const mutation = useVerifyResetPasswordMutation(state.setError);
-  const sendCodeMutation = useSendCodeMutation(state.setError, () =>
+  const { mutate: sendCode } = useSendCodeMutation(state.setError, () =>
     state.setResendTimer(60),
   );
+
+  useEffect(() => {
+    sendCode(state.email);
+  }, [sendCode, state.email]);
 
   const onSubmit = useCallback(() => {
     mutation.mutate({
@@ -29,7 +33,7 @@ const ResetPasswordVerificationForm = () => {
       resendTimer={state.resendTimer}
       onChange={(text) => state.setCode(text)}
       onSubmit={onSubmit}
-      resendCode={() => sendCodeMutation.mutate(state.email)}
+      resendCode={() => sendCode(state.email)}
     />
   );
 };

@@ -7,13 +7,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 24,
     gap: 32,
   },
-  title: {
-    fontSize: 40,
-    fontWeight: "600",
-  },
-  text: {
-    fontSize: 16,
-  },
   link: {
     fontSize: 16,
     fontWeight: "500",

@@ -4,7 +4,10 @@ import { Text, TextProps, View, ViewProps } from "react-native";
 const ThemedText = (props: TextProps) => {
   const theme = useTheme();
   return (
-    <Text {...props} style={[props.style, { color: theme.colors.text }]}>
+    <Text
+      {...props}
+      style={[{ color: theme.colors.text, fontSize: 16 }, props.style]}
+    >
       {props.children}
     </Text>
   );

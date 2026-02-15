@@ -9,6 +9,11 @@ export interface ILoginDto {
   password: string;
 }
 
+export interface IResetPasswordDto {
+  newPassword: string;
+  reset_token: string;
+}
+
 export interface IAuthResponse {
   email: string;
   auth_token: string;

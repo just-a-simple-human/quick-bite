@@ -7,7 +7,6 @@ export function handleServerErrors<T extends UseFormSetError<any>>(
 ) {
   const errorData = error.response?.data;
   if (!errorData) {
-    console.log(error.toJSON());
     setError("root", { message: "Something went wrong!" });
   } else {
     for (let key in errorData) {

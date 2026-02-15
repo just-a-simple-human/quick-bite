@@ -23,15 +23,22 @@ export default function RootLayout() {
       <QueryClientProvider client={client}>
         <Stack initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" options={{ header: () => <Header /> }} />
-          <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-          <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-          <Stack.Screen name="verification" options={{ headerShown: false }} />
+          <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
+          <Stack.Screen name="auth/sign-in" options={{ headerShown: false }} />
           <Stack.Screen
-            name="reset-password"
+            name="auth/reset-password"
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="recover-password"
+            name="auth/forgot-password"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="verification/registration"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="verification/reset-password"
             options={{ headerShown: false }}
           />
         </Stack>

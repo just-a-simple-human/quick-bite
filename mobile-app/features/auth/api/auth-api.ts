@@ -1,5 +1,10 @@
 import { api } from "@/shared/api/api";
-import { IAuthResponse, ILoginDto, IRegisterDto } from "../model/auth-dto";
+import {
+  IAuthResponse,
+  ILoginDto,
+  IRegisterDto,
+  IResetPasswordDto,
+} from "../model/auth-dto";
 
 export const authApi = {
   async register(data: IRegisterDto) {
@@ -13,6 +18,13 @@ export const authApi = {
   async login(data: ILoginDto) {
     const response = await api.post<IAuthResponse>(
       "/auth/customer/login",
+      data,
+    );
+    return response;
+  },
+  async resetPassword(data: IResetPasswordDto) {
+    const response = await api.post<IAuthResponse>(
+      "/auth/customer/reset-password",
       data,
     );
     return response;

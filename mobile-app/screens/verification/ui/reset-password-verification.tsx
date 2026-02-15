@@ -1,39 +1,26 @@
 import { ResetPasswordVerificationForm } from "@/features/verify";
 import { ThemedText } from "@/shared/ui/themed";
-import { useTheme } from "@react-navigation/native";
-import { Link } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { styles } from "./styles";
+import { Heading } from "@/shared/ui/heading";
+import { FullScreen } from "@/shared/ui/full-screen";
+import { ProgressBar } from "@/shared/ui/progress-bar";
 
 const ResetPasswordVerificationScreen = () => {
-  const theme = useTheme();
-  const email = "afanasovkonstantin2005@gmail.com";
+  const { email } = useLocalSearchParams();
+
   return (
-    <SafeAreaView
-      style={[
-        styles.verificationScreen,
-        { backgroundColor: theme.colors.card },
-      ]}
-    >
-      <ThemedText style={styles.title}>Please check your email</ThemedText>
-      <ThemedText textBreakStrategy="highQuality" style={styles.text}>
+    <FullScreen>
+      <Heading textBreakStrategy="balanced">Please, check your email</Heading>
+      <ThemedText textBreakStrategy="highQuality" style={{ fontSize: 18 }}>
         We have sent a verification code to{" "}
-        <ThemedText style={{ fontWeight: "500" }}>{email}</ThemedText>
+        <ThemedText style={{ fontWeight: "500", fontSize: 18 }}>
+          {email}
+        </ThemedText>
       </ThemedText>
       <ResetPasswordVerificationForm />
-      <ThemedText
-        style={[styles.text, { textAlign: "center", marginTop: "auto" }]}
-      >
-        Remember password?{" "}
-        <Link
-          style={[styles.link, { color: theme.colors.primary }]}
-          href={"/sign-in"}
-        >
-          Sign In
-        </Link>
-      </ThemedText>
-    </SafeAreaView>
+      <ProgressBar size={3} step={2} style={{ marginTop: "auto" }} />
+    </FullScreen>
   );
 };
 
