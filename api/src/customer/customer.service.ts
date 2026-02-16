@@ -22,9 +22,10 @@ export class CustomerService {
     return response;
   }
 
-  async findOneByEmail(email: string) {
+  async findOneByEmail(email: string, cache?: boolean) {
     const response = await this.customerRepository.findOne({
       where: { email },
+      cache: cache,
     });
     return response;
   }

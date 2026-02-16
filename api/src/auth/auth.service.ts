@@ -29,6 +29,7 @@ export class AuthService {
   async registerCustomer(createCustomerDto: CreateCustomerDto) {
     const alreadyExists = await this.customerService.findOneByEmail(
       createCustomerDto.email,
+      false,
     );
     if (alreadyExists) {
       throw new ConflictException({
@@ -51,7 +52,7 @@ export class AuthService {
   }
 
   async validateCustomer(email: string, password: string) {
-    const customer = await this.customerService.findOneByEmail(email);
+    const customer = await this.customerService.findOneByEmail(email, false);
     if (!customer) {
       return null;
     }
@@ -125,7 +126,7 @@ export class AuthService {
       throw new ForbiddenException();
     }
 
-    const customer = await this.customerService.findOneByEmail(email);
+    const customer = await this.customerService.findOneByEmail(email, false);
     if (!customer) {
       throw new NotFoundException('Customer not found');
     }
