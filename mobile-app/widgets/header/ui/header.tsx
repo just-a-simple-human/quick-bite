@@ -1,12 +1,11 @@
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
 import { AccountIcon, Logo } from "../assets/icons";
 import { styles } from "./style";
-import { Image } from "expo-image";
 
-const  Header = () => {
+const Header = () => {
   const theme = useTheme();
 
   return (
@@ -23,8 +22,6 @@ const  Header = () => {
       <TouchableOpacity
         style={[
           {
-            width: 48,
-            height: 48,
             borderRadius: 8,
             padding: 8,
             backgroundColor: theme.colors.background,
@@ -35,6 +32,6 @@ const  Header = () => {
       </TouchableOpacity>
     </SafeAreaView>
   );
-}
+};
 
 export { Header };

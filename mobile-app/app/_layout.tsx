@@ -1,11 +1,11 @@
 import { Stack } from "expo-router";
-import "react-native-reanimated";
 import { SystemBars } from "react-native-edge-to-edge";
 import { Header } from "@/widgets/header";
 import { ThemeProvider } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
 import { DarkAppTheme, LightAppTheme } from "@/shared/consts/colors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "react-native-reanimated";
 
 export const unstable_settings = {
   anchor: "(tabs)",
