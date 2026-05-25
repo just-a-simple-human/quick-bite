@@ -1,17 +1,15 @@
-import { Stack } from "expo-router";
-import { SystemBars } from "react-native-edge-to-edge";
-import { Header } from "@/widgets/header";
-import { ThemeProvider } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
-import { DarkAppTheme, LightAppTheme } from "@/shared/consts/colors";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-native-reanimated";
+import { Stack } from "expo-router";
+import { ThemeProvider } from "@react-navigation/native";
+import { SystemUIWrapper } from "@/global/ui/system-ui-wrapper";
+import { Header } from "@/widgets/header";
+import { MenuInfoModal } from "@/entities/menu";
+import { DarkAppTheme, LightAppTheme } from "@/shared/consts/colors";
 
 export const unstable_settings = {
   anchor: "(tabs)",
 };
-
-const client = new QueryClient();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,7 +18,7 @@ export default function RootLayout() {
     <ThemeProvider
       value={colorScheme === "dark" ? DarkAppTheme : LightAppTheme}
     >
-      <QueryClientProvider client={client}>
+      <SystemUIWrapper>
         <Stack initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" options={{ header: () => <Header /> }} />
           <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
@@ -42,11 +40,8 @@ export default function RootLayout() {
             options={{ headerShown: false }}
           />
         </Stack>
-      </QueryClientProvider>
-      <SystemBars
-        style={{ statusBar: "auto", navigationBar: "auto" }}
-        hidden={{ navigationBar: false, statusBar: false }}
-      />
+        <MenuInfoModal />
+      </SystemUIWrapper>
     </ThemeProvider>
   );
 }

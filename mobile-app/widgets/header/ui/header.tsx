@@ -1,6 +1,5 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@react-navigation/native";
 import { AccountIcon, Logo } from "../assets/icons";
 import { styles } from "./style";
@@ -9,8 +8,7 @@ const Header = () => {
   const theme = useTheme();
 
   return (
-    <SafeAreaView
-      edges={["top"]}
+    <View
       style={[
         styles.header,
         {
@@ -30,7 +28,7 @@ const Header = () => {
       >
         <AccountIcon style={theme.dark ? "light" : "dark"} />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 

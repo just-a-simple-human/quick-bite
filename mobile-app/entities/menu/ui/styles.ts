@@ -46,3 +46,15 @@ export const cardStyles = StyleSheet.create({
     borderRadius: 12,
   },
 });
+
+export const modalStyles = StyleSheet.create({
+  modal: {
+    minHeight: "100%",
+    padding: 16,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    alignItems: "center",
+  },
+  image: { width: 192, borderRadius: 16, aspectRatio: 1 },
+  title: { textAlign: "center", fontWeight: "600", fontSize: 24 },
+});

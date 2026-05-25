@@ -1,7 +1,7 @@
 import { Image, ImageProps } from "expo-image";
 
 interface IProps extends ImageProps {
-  filename: string;
+  filename?: string;
 }
 
 export const ExternalImage = ({ filename, style }: IProps) => {
