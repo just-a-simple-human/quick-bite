@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -30,21 +29,11 @@ export class CategoryController {
   }
 
   @Get()
-  @UseAuth({
-    action: Action.Read,
-    resource: Resource.Category,
-    possession: 'any',
-  })
   findAll() {
     return this.categoryService.findAll();
   }
 
   @Get(':id')
-  @UseAuth({
-    action: Action.Read,
-    resource: Resource.Category,
-    possession: 'any',
-  })
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
   }

@@ -29,21 +29,11 @@ export class MenuItemController {
   }
 
   @Get()
-  @UseAuth({
-    action: Action.Read,
-    resource: Resource.MenuItem,
-    possession: 'any',
-  })
   findAll(@Query('limit') limit?: number, @Query('offset') offset?: number) {
     return this.menuItemService.getMenu(limit, offset);
   }
 
   @Get(':id')
-  @UseAuth({
-    action: Action.Read,
-    resource: Resource.MenuItem,
-    possession: 'any',
-  })
   findOne(@Param('id') id: string) {
     return this.menuItemService.findOne(+id);
   }
