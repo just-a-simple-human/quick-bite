@@ -29,8 +29,12 @@ export class MenuItemController {
   }
 
   @Get()
-  findAll(@Query('limit') limit?: number, @Query('offset') offset?: number) {
-    return this.menuItemService.getMenu(limit, offset);
+  findAll(
+    @Query('page') page?: number,
+    @Query('itemsPerPage') itemsPerPage?: number,
+    @Query('categoryId') categoryId?: number,
+  ) {
+    return this.menuItemService.findAll(page, itemsPerPage, categoryId);
   }
 
   @Get(':id')
