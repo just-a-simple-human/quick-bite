@@ -3,7 +3,7 @@ import { Image } from "expo-image";
 export const AccountIcon = ({ style }: { style: "dark" | "light" }) => {
   return (
     <Image
-      style={{ width: 32, height: 32 }}
+      style={{ width: 24, height: 24 }}
       source={
         style === "light"
           ? require("./account-icon-light.png")
@@ -17,8 +17,8 @@ export const Logo = ({ style }: { style: "dark" | "light" }) => {
   return (
     <Image
       style={{
-        width: 156,
-        height: 48,
+        width: 128,
+        height: 40,
       }}
       source={
         style === "light"
