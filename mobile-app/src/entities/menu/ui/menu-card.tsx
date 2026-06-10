@@ -5,7 +5,7 @@ import { ExternalImage } from "@/shared/ui/external-image";
 import { cardStyles } from "./styles";
 import { PlusIcon } from "@/shared/assets";
 import { IMenuItem } from "@/shared/types/entities";
-import { useMenuInfoModalStore } from "../model/use-menu-info-modal-store";
+import { useMenuItemModalStore } from "../model/use-menu-item-modal-store";
 
 interface IProps {
   item: IMenuItem;
@@ -14,7 +14,7 @@ interface IProps {
 
 const MenuCard = ({ item, width }: IProps) => {
   const theme = useTheme();
-  const { open } = useMenuInfoModalStore();
+  const { open } = useMenuItemModalStore();
 
   return (
     <Pressable

@@ -2,11 +2,11 @@ import { api } from "@/shared/api/api";
 import { IMenuItem } from "@/shared/types/entities";
 
 export const menuApi = {
-  async getAll({ offset }: { offset: number }) {
+  async getAll({ page }: { page: number }) {
     const response = await api.get<IMenuItem[]>("menu", {
       params: {
-        limit: 14,
-        offset: offset,
+        itemsPerPage: 14,
+        page: page,
       },
     });
     return response;

@@ -1,5 +1,5 @@
 import { useTheme } from "@react-navigation/native";
-import { Text, TextProps, View, ViewProps } from "react-native";
+import { Text, TextProps } from "react-native";
 
 const ThemedText = (props: TextProps) => {
   const theme = useTheme();
@@ -10,18 +10,6 @@ const ThemedText = (props: TextProps) => {
     >
       {props.children}
     </Text>
-  );
-};
-
-const ThemedCard = (props: ViewProps) => {
-  const theme = useTheme();
-  return (
-    <View
-      {...props}
-      style={[props.style, { backgroundColor: theme.colors.card }]}
-    >
-      {props.children}
-    </View>
   );
 };
 

@@ -2,9 +2,9 @@ import { useColorScheme } from "react-native";
 import "react-native-reanimated";
 import { Stack } from "expo-router";
 import { ThemeProvider } from "@react-navigation/native";
-import { SystemUIWrapper } from "@/global/ui/system-ui-wrapper";
+import { AppWrapper } from "@/global/ui/app-wrapper";
 import { Header } from "@/widgets/header";
-import { MenuInfoModal } from "@/entities/menu";
+import { MenuItemModal } from "@/entities/menu";
 import { DarkAppTheme, LightAppTheme } from "@/shared/consts/colors";
 
 export const unstable_settings = {
@@ -18,7 +18,7 @@ export default function RootLayout() {
     <ThemeProvider
       value={colorScheme === "dark" ? DarkAppTheme : LightAppTheme}
     >
-      <SystemUIWrapper>
+      <AppWrapper>
         <Stack initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" options={{ header: () => <Header /> }} />
           <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
@@ -40,8 +40,8 @@ export default function RootLayout() {
             options={{ headerShown: false }}
           />
         </Stack>
-        <MenuInfoModal />
-      </SystemUIWrapper>
+        <MenuItemModal />
+      </AppWrapper>
     </ThemeProvider>
   );
 }

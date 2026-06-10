@@ -13,13 +13,13 @@ function useMenuGetAllQuery() {
   >({
     queryKey: ["menu"],
     queryFn: async ({ pageParam = 0 }) => {
-      const { data } = await menuApi.getAll({ offset: pageParam });
+      const { data } = await menuApi.getAll({ page: pageParam });
       return data;
     },
-    getNextPageParam: (lastPage, pages) => {
-      return lastPage?.length === 14 ? pages.flat().length : undefined;
+    getNextPageParam: (lastPage, _, prev) => {
+      return lastPage?.length === 14 ? prev + 1 : undefined;
     },
-    initialPageParam: 0,
+    initialPageParam: 1,
     select: (data) => data.pages.flat(),
   });
 }

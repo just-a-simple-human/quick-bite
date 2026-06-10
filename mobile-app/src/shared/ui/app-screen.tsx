@@ -7,8 +7,6 @@ const AppScreen = ({ children }: ViewProps) => {
 
   return (
     <SafeAreaView
-      edges={{ top: "off", bottom: "off" }}
-      mode="padding"
       style={[styles.appScreen, { backgroundColor: theme.colors.background }]}
     >
       {children}
