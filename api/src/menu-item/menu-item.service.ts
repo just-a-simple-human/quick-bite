@@ -31,7 +31,7 @@ export class MenuItemService {
       take: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
       where: { category: { id: categoryId } },
-      order: { category: { name: 'ASC' } },
+      order: { category: { id: 'ASC' } },
     });
     return response.map((item) => this.toDto(item));
   }
@@ -60,6 +60,7 @@ export class MenuItemService {
       name: menuItem.name,
       description: menuItem.description,
       slug: menuItem.slug,
+      image: menuItem.image,
       price: menuItem.price,
       weight: menuItem.weight,
       nutritions: {
